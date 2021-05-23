@@ -10,11 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'ShopController@index');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/mycart', 'ShopController@myCart');
+    Route::post('/mycart', 'ShopController@addMycart');
+    Route::post('/cartdelete', 'ShopController@deleteCart');
+    Route::post('/checkout', 'ShopController@checkout');
+   
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
