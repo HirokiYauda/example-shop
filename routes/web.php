@@ -10,15 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'ShopController@index');
+Route::get('/', 'ShopController@index')->name('top');
+
+Route::get('/cart', 'ShopController@myCart')->name('cart');
+Route::post('/cart', 'ShopController@addMycart')->name('add_cart');
 
 Route::group(['middleware' => ['auth']], function () {
-
-    Route::get('/mycart', 'ShopController@myCart');
-    Route::post('/mycart', 'ShopController@addMycart');
-    Route::post('/cartdelete', 'ShopController@deleteCart');
-    Route::post('/checkout', 'ShopController@checkout');
-   
+    Route::post('/cartdelete', 'ShopController@deleteCart')->name('delete_cart');
+    Route::post('/checkout', 'ShopController@checkout')->name('checkout');
+    Route::get('/myage/edit', 'MypageController@myCart')->name('mypage_edit');
 });
 
 Auth::routes();

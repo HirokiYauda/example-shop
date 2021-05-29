@@ -30,7 +30,8 @@ class ShopController extends Controller
     public function myCart(Cart $cart)
     {
         $data = $cart->showCart();
-        return view('mycart', $data);
+        exit;
+        return view('cart', $data);
     }
 
 
@@ -48,7 +49,7 @@ class ShopController extends Controller
         //追加後の情報を取得
         $data = $cart->showCart();
 
-        return view('mycart', $data)->with('message', $message);
+        return view('cart', $data)->with('message', $message);
     }
 
     /**
@@ -66,7 +67,7 @@ class ShopController extends Controller
         //追加後の情報を取得
         $data = $cart->showCart();
 
-        return view('mycart', $data)->with('message', $message);
+        return view('cart', $data)->with('message', $message);
     }
 
     /**
