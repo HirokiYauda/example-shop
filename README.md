@@ -1,17 +1,17 @@
 ## 仮想環境構築
-git clone https://github.com/HirokiYauda/example-shop.git
-cd example-shop
-cp .env.example .env
-docker-compose up -d
-docker-compose exec app bash
-composer install
-php artisan migrate
-php artisan db:seed
-nvm install --lts
-nvm use --lts
-nvm alias default lts/*
-npm install
-※ .envファイルの設定が必要
+- git clone https://github.com/HirokiYauda/example-shop.git
+- cd example-shop
+- cp .env.example .env
+- docker-compose up -d
+- docker-compose exec app bash
+- composer install
+- php artisan migrate
+- php artisan db:seed
+- nvm install --lts
+- nvm use --lts
+- nvm alias default lts/*
+- npm install
+- ※ .envファイルの設定が必要
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
