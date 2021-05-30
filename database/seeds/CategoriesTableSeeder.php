@@ -15,16 +15,19 @@ class CategoriesTableSeeder extends Seeder
         DB::table('categories')->insert([
             'id' => 1,
             'name' => "本",
+            'name_en' => "book",
         ]);
 
         DB::table('categories')->insert([
             'id' => 2,
             'name' => "音楽",
+            'name_en' => "music",
         ]);
 
         DB::table('categories')->insert([
             'id' => 3,
             'name' => "ゲーム",
+            'name_en' => "game",
         ]);
     }
 }
