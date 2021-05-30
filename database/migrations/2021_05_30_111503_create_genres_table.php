@@ -17,6 +17,7 @@ class CreateGenresTable extends Migration
             $table->bigIncrements('id');
             $table->integer('category_id');
             $table->string('name', '100');
+            $table->string('name_en', '100');
             $table->timestamps();
             $table->softDeletes();
         });
