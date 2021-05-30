@@ -52,11 +52,10 @@
                     <form class="form-inline my-2 my-lg-0">
                         <div>
                             <select class="form-control input-lg" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="">すべて</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->name}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col pl-1 pr-1">
