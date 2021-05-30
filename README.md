@@ -11,6 +11,7 @@
 - nvm use --lts
 - nvm alias default lts/*
 - npm install
+- npm run dev
 - ※ .envファイルの設定が必要
 
 

@@ -54,7 +54,7 @@
                             <select class="form-control input-lg" id="exampleFormControlSelect1">
                                 <option value="">すべて</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->name}}">{{$category->name}}</option>
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -104,7 +104,20 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <div class="bg-white py-2">
+            <ul class="row mb-0">
+                <li class="list-unstyled">
+                    <a  class="btn btn-primary mr-2 font06" href="?caegory_id=">すべて</a>
+                </li>
+                @foreach ($categories as $category)
+                    <li class="list-unstyled">
+                        <a  class="btn btn-primary mr-2 font06" href="?caegory_id={{$category->id}}">{{$category->name}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <main class="py-4 container">
             @yield('content')
         </main>
 
