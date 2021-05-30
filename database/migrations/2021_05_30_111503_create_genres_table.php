@@ -18,6 +18,7 @@ class CreateGenresTable extends Migration
             $table->integer('category_id');
             $table->string('name', '100');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
