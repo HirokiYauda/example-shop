@@ -2,40 +2,37 @@
 @section('title', 'Exapmle Shop')
 
 @section('content')
-<div class="container-fluid">
-   <div class="">
-       <div class="mx-auto">
-           <h1 style="color:#555555; text-align:center; font-size:1.2em; padding:24px 0px; font-weight:bold;">商品一覧</h1>
-           <div class="">
-               <div class="d-flex flex-row flex-wrap">
-                       @foreach($stocks as $stock)
-                           <div class="col-xs-6 col-sm-4 col-md-4 ">
-                               <div class="mycart_box">
-                                   {{$stock->name}} <br>
-                                   {{$stock->fee}}円<br>
-                                   <img src="/images/{{$stock->imgpath}}" alt="" class="incart" >
-                                   <br>
-                                   {{$stock->detail}} <br>
+<h1 class="h3 text-center mb-3">商品一覧</h1>
+<div class="row">
+    @foreach($stocks as $stock)
+        <div class="col-sm-6 col-md-3 mb-4">
+            <div class="card h-100">
+                <a href="/detail/{{$stock->name_en}}/{{$stock->genre->category->id}}/{{$stock->genre->id}}/">
+                    <img class="bd-placeholder-img card-img-top obj-fit" src="/images/{{$stock->imgpath}}" alt="">
+                </a>
+                <div class="card-body px-2 py-3">
+                    <h5>
+                        <a class="text-decoration-none h6" href="/detail/{{$stock->name_en}}/{{$stock->genre->category->id}}/{{$stock->genre->id}}/">
+                            {{$stock->name}}
+                        </a>
+                    </h5>
+                    <a class="btn btn-info mr-2 font06 text-white mb-2" href="">{{$stock->genre->category->name}}</a>
+                    <p class="lead text-danger mb-1">{{number_format($stock->price) . "円" ?? ""}}</p>
+                    <p class="card-text"><small>{{$stock->detail}}</small></p>
+                </div>
+                <div class="card-footer bg-white border-white text-center mb-2">
+                    <form action="mycart" method="post">
+                        @csrf
+                        <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                        <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
 
-                                    {{-- 追加 --}}
-
-                                   <form action="mycart" method="post">
-                                       @csrf
-                                       <input type="hidden" name="stock_id" value="{{ $stock->id }}">
-                                       <input type="submit" value="カートに入れる">
-                                   </form>
-
-                                    {{-- ここまで --}}
-                               </div>
- 
-                           </div>
-                       @endforeach                    
-               </div>
-               <div class="text-center" style="width: 200px;margin: 20px auto;">
-               {{  $stocks->links()}} 
-               </div>
-           </div>
-       </div>
-   </div>
+<div class="text-center" style="width: 200px;margin: 20px auto;">
+    {{  $stocks->links()}}
 </div>
 @endsection

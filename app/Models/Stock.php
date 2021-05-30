@@ -14,12 +14,12 @@ class Stock extends Model
     ];
 
     /**
-     * Category relation
+     * Genre relation
      *
      * @return relationMethod
      */
-    public function category()
+    public function genre()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Genre::class);
     }
 }

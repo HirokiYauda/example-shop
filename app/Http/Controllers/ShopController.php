@@ -18,7 +18,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::Paginate(6);
+        $stocks = Stock::with('genre.category')->Paginate(6);
         return view('shop', compact('stocks'));
     }
 
