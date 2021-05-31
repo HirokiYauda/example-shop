@@ -11,6 +11,7 @@
 |
 */
 Route::get('/', 'ShopController@index')->name('top');
+Route::get('/{category}', 'ShopController@categoryNarrowingDown');
 
 Route::get('/cart', 'ShopController@myCart')->name('cart');
 Route::post('/cart', 'ShopController@addMycart')->name('add_cart');

@@ -54,7 +54,7 @@
                             <select class="form-control input-lg" id="exampleFormControlSelect1">
                                 <option value="">すべて</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option value="{{$category->id}}" {{request('category') === $category->name_en ? 'selected' : ""}}>{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>

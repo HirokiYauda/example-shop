@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Stock;
+use App\Models\Category;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Thanks;
@@ -12,14 +13,28 @@ use App\Mail\Thanks;
 class ShopController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Top Page
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
         $stocks = Stock::with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks'));
+        return view('top', compact('stocks'));
+    }
+
+    /**
+     * Category narrowing down Page
+     *
+     * @return View
+     */
+    public function categoryNarrowingDown($category_name_en)
+    {
+        // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
+        $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+
+        $stocks = Stock::with('genre.category')->Paginate(6);
+        return view('shop', compact('stocks', 'specified_category'));
     }
 
     /**
