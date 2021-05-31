@@ -33,9 +33,10 @@ class ShopController extends Controller
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得。存在しないときは例外エラー
         $genres = Genre::where('category_id', $specified_category->id)->get();
-
-        $stocks = Stock::with('genre.category')->Paginate(6);
+        // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込み
+        $stocks = Stock::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
         return view('shop', compact('stocks', 'specified_category', 'genres'));
     }
 
@@ -48,10 +49,13 @@ class ShopController extends Controller
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得。存在しないときは例外エラー
         $genres = Genre::where('category_id', $specified_category->id)->get();
-
-        $stocks = Stock::with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'specified_category', 'genres'));
+        // 必須パラメータのジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
+        $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
+         // 必須パラメータのジャンルから、IDで絞り込み
+        $stocks = Stock::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
+        return view('shop', compact('stocks', 'specified_category', 'genres', 'specified_genre'));
     }
 
     /**
