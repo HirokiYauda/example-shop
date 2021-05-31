@@ -11,7 +11,9 @@
 |
 */
 Route::get('/', 'ShopController@index')->name('top');
-Route::get('/{category}', 'ShopController@categoryNarrowingDown');
+Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
+Route::get('/{category}/{genre}', 'ShopController@categoryNarrowingDown')->name('genre_narrowing_down');
+Route::get('/detail/{product}/{category_id}/{genre_id}', 'ShopController@productDetail')->name('product_detail');
 
 Route::get('/cart', 'ShopController@myCart')->name('cart');
 Route::post('/cart', 'ShopController@addMycart')->name('add_cart');

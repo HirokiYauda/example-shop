@@ -7,16 +7,16 @@
     @foreach($stocks as $stock)
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card h-100">
-                <a href="/detail/{{$stock->name_en}}/{{$stock->genre->category->id}}/{{$stock->genre->id}}/">
+                <a href="{{route('product_detail', ['product'=> $stock->name_e], 'category_id' => $stock->genre->category->id, 'genre_id' => $stock->genre->id])}}">
                     <img class="bd-placeholder-img card-img-top obj-fit" src="/images/{{$stock->imgpath}}" alt="">
                 </a>
                 <div class="card-body px-2 py-3">
                     <h5>
-                        <a class="text-decoration-none h6" href="/detail/{{$stock->name_en}}/{{$stock->genre->category->id}}/{{$stock->genre->id}}/">
+                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $stock->name_en, 'category_id' => $stock->genre->category->id, 'genre_id' => $stock->genre->id])}}">
                             {{$stock->name}}
                         </a>
                     </h5>
-                    <a class="btn btn-info mr-2 font06 text-white mb-2" href="">{{$stock->genre->category->name}}</a>
+                    <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('category_narrowing_down', ['category' => $stock->genre->category->name_en])}}">{{$stock->genre->category->name}}</a>
                     <p class="lead text-danger mb-1">{{number_format($stock->price) . "円" ?? ""}}</p>
                     <p class="card-text"><small>{{$stock->detail}}</small></p>
                 </div>

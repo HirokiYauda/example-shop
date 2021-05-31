@@ -16,7 +16,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('top') }}">
                     {{ config('app.name') }}
                 </a>
 
@@ -34,8 +34,8 @@
                             @endif
                             <a class="dropdown-item" href="{{ route('cart') }}">カートを見る</a>
                         @else
-                            <a class="dropdown-item" href="{{ url('/mycart') }}">カートを見る</a>
-                            <a class="dropdown-item" href="{{ url('/mypage/edit') }}">アカウント管理</a>
+                            <a class="dropdown-item" href="{{ route('cart') }}">カートを見る</a>
+                            <a class="dropdown-item" href="{{ route('mypage_edit') }}">アカウント管理</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('ログアウト') }}
@@ -106,14 +106,19 @@
 
         <div class="bg-white py-2">
             <ul class="row mb-0">
-                <li class="list-unstyled">
-                    <a  class="btn btn-primary mr-2 font06" href="?caegory_id=">すべて</a>
-                </li>
-                @foreach ($categories as $category)
-                    <li class="list-unstyled">
-                        <a  class="btn btn-primary mr-2 font06" href="?caegory_id={{$category->id}}">{{$category->name}}</a>
-                    </li>
-                @endforeach
+                @if(!empty(request('category')))
+                    @foreach ($genres as $genre)
+                        <li class="list-unstyled">
+                            <a  class="btn btn-primary mr-2 font06" href="{{route('genre_narrowing_down', ['category' => $category->name_en, 'genre' => $genre->name_en])}}">{{$genre->name}}</a>
+                        </li>
+                    @endforeach
+                @else
+                    @foreach ($categories as $category)
+                        <li class="list-unstyled">
+                            <a  class="btn btn-primary mr-2 font06" href="{{route('category_narrowing_down', ['category' => $category->name_en])}}">{{$category->name_en}}</a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
 

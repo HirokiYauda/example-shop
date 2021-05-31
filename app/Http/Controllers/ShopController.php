@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Stock;
 use App\Models\Category;
+use App\Models\Genre;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Thanks;
@@ -32,9 +33,40 @@ class ShopController extends Controller
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+        $genres = Genre::where('category_id', $specified_category->id)->get();
 
         $stocks = Stock::with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'specified_category'));
+        return view('shop', compact('stocks', 'specified_category', 'genres'));
+    }
+
+    /**
+     * Genre narrowing down Page
+     *
+     * @return View
+     */
+    public function genreNarrowingDown($category_name_en, $genre_name_en)
+    {
+        // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
+        $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+        $genres = Genre::where('category_id', $specified_category->id)->get();
+
+        $stocks = Stock::with('genre.category')->Paginate(6);
+        return view('shop', compact('stocks', 'specified_category', 'genres'));
+    }
+
+    /**
+     * Product detail Page
+     *
+     * @return View
+     */
+    public function ProductDetail($product_name_en, $category_id, $genre_id)
+    {
+        // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
+        $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
+        $genres = Genre::where('category_id', $specified_category->id)->get();
+
+        $stocks = Stock::with('genre.category')->Paginate(6);
+        return view('shop', compact('stocks', 'specified_category', 'genres'));
     }
 
     /**
