@@ -39,7 +39,7 @@ class ShopController extends Controller
         // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込み
         $stocks = Stock::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
 
-        return view('shop', compact('stocks', 'page_name', 'genres'));
+        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ShopController extends Controller
         $page_name = "「{$specified_genre->name}」の商品一覧";
         // 必須パラメータのジャンルから、IDで絞り込み
         $stocks = Stock::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'page_name', 'genres'));
+        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -72,7 +72,9 @@ class ShopController extends Controller
         $specified_category = Category::where('name_en', $request->category)->first();
         // カテゴリが存在するとき、指定ジャンル一覧を取得
         $genres = null;
+        $category_name_en = null;
         if (!empty($specified_category)) {
+            $category_name_en = $request->category;
             $genres = Genre::where('category_id', $specified_category->id)->get();
         }
         $page_name = "「{$request->free_word}」の検索結果";
@@ -87,7 +89,7 @@ class ShopController extends Controller
         ->with('genre.category')
         ->Paginate(6);
 
-        return view('shop', compact('stocks', 'page_name', 'genres'));
+        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -95,14 +97,15 @@ class ShopController extends Controller
      *
      * @return View
      */
-    public function productDetail($product_name_en, $category_id, $genre_id)
+    public function productDetail($product_name_en)
     {
-        // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
-        $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
-        $genres = Genre::where('category_id', $specified_category->id)->get();
+        // EN商品名から単一商品情報を取得。存在しないときは例外エラー
+        $stock = Stock::where('name_en', $product_name_en)->firstOrFail();
+        // 単一商品情報のカテゴリから指定ジャンル一覧を取得
+        $genres = Genre::where('category_id', $stock->genre->category->id)->get();
+        $category_name_en = $stock->genre->category->name_en;
 
-        $stocks = Stock::with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'specified_category', 'genres'));
+        return view('detail', compact('stock', 'genres', 'category_name_en'));
     }
 
     /**
