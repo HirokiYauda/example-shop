@@ -35,6 +35,6 @@
 </div>
 
 <div class="text-center" style="width: 200px;margin: 20px auto;">
-    {{  $stocks->links()}}
+    {{  $stocks->appends(request()->input())->links()}}
 </div>
 @endsection

@@ -49,9 +49,9 @@
 
                 {{-- 検索ボックス --}}
                 <div class="col-md-7">
-                    <form class="form-inline my-2 my-lg-0" action="search" method="GET">
+                    <form class="form-inline my-2 my-lg-0" method="GET" id="global_search_form">
                         <div>
-                            <select name="category" class="form-control input-lg" id="exampleFormControlSelect1">
+                            <select id="global_search_category" name="category" class="form-control input-lg" id="exampleFormControlSelect1">
                                 <option value="">すべて</option>
                                 @foreach ($categories as $category)
                                     <option value="{{$category->name_en}}" {{request('category') === $category->name_en ? 'selected' : ""}}>{{$category->name}}</option>
@@ -59,9 +59,9 @@
                             </select>
                         </div>
                         <div class="col pl-1 pr-1">
-                            <input value="{{request('free_word', "")}}" class="form-control mr-sm-2 mr-2 w-100" type="search" name="free_word" placeholder="Search" aria-label="Search">
+                            <input id="global_search_freeword" value="{{request('free_word', "")}}" class="form-control mr-sm-2 mr-2 w-100" type="search" name="free_word" placeholder="Search" aria-label="Search">
                         </div>
-                        <div class="text-center"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></div>
+                        <div class="text-center"><button id="global_search_btn" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button></div>
                     </form>
                 </div>
 
@@ -115,7 +115,7 @@
                 @else
                     @foreach ($categories as $category)
                         <li class="list-unstyled">
-                            <a  class="btn btn-primary mr-2 font06" href="{{route('category_narrowing_down', ['category' => $category->name_en])}}">{{$category->name_en}}</a>
+                            <a  class="btn btn-primary mr-2 font06" href="{{route('category_narrowing_down', ['category' => $category->name_en])}}">{{$category->name}}</a>
                         </li>
                     @endforeach
                 @endif
