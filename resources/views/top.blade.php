@@ -7,7 +7,7 @@
     @foreach($stocks as $stock)
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card h-100">
-                <a href="{{route('product_detail', ['product'=> $stock->name_e], 'category_id' => $stock->genre->category->id, 'genre_id' => $stock->genre->id])}}">
+                <a href="{{route('product_detail', ['product'=> $stock->name_en, 'category_id' => $stock->genre->category->id, 'genre_id' => $stock->genre->id])}}">
                     <img class="bd-placeholder-img card-img-top obj-fit" src="/images/{{$stock->imgpath}}" alt="">
                 </a>
                 <div class="card-body px-2 py-3">
