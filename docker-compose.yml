@@ -28,3 +28,4 @@ services:
       - "3306:3306"
     volumes:
       - ./docker/db/mysql:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
