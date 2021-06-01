@@ -25,6 +25,7 @@ class CreateStocksTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::statement('ALTER TABLE stocks ADD FULLTEXT index search_tag (`search_tag`) with parser ngram');
     }
 
     /**

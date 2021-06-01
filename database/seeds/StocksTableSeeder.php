@@ -17,7 +17,7 @@ class StocksTableSeeder extends Seeder
             'name_en' => 'film-camera',
             'genre_id' => 1,
             'detail' => '1960年式のカメラです',
-            'search_tag' => 'フィルムカメラ',
+            'search_tag' => 'フィルムカメラ film_camera',
             'price' => 200000,
             'imgpath' => 'filmcamera.jpg',
         ]);

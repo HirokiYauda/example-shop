@@ -11,8 +11,10 @@
 |
 */
 Route::get('/', 'ShopController@index')->name('top');
+Route::get('/search', 'ShopController@search')->name('search');
 Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
 Route::get('/{category}/{genre}', 'ShopController@genreNarrowingDown')->name('genre_narrowing_down');
+
 Route::get('/detail/{product}/{category_id}/{genre_id}', 'ShopController@productDetail')->name('product_detail');
 
 Route::get('/cart', 'ShopController@myCart')->name('cart');

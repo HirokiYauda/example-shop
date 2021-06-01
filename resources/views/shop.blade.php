@@ -1,10 +1,10 @@
 @extends('layouts.default')
 @section('title')
-「{{isset($specified_genre) ? $specified_genre->name : $specified_category->name}}」の商品一覧 | Exapmle Shop
+{{$page_name}} | Exapmle Shop
 @endsection
 
 @section('content')
-<h1 class="h3 text-center mb-3">「{{isset($specified_genre) ? $specified_genre->name : $specified_category->name}}」の商品一覧</h1>
+<h1 class="h3 text-center mb-3">{{$page_name}}</h1>
 <div class="row">
     @foreach($stocks as $stock)
         <div class="col-sm-6 col-md-3 mb-4">

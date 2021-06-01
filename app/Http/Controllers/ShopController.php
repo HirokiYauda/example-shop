@@ -33,11 +33,13 @@ class ShopController extends Controller
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
-        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得。存在しないときは例外エラー
+        $page_name = "「{$specified_category->name}」の商品一覧";
+        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
         // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込み
         $stocks = Stock::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'specified_category', 'genres'));
+
+        return view('shop', compact('stocks', 'page_name', 'genres'));
     }
 
     /**
@@ -49,13 +51,43 @@ class ShopController extends Controller
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
-        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得。存在しないときは例外エラー
+        // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
         // 必須パラメータのジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
         $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
-         // 必須パラメータのジャンルから、IDで絞り込み
+        $page_name = "「{$specified_genre->name}」の商品一覧";
+        // 必須パラメータのジャンルから、IDで絞り込み
         $stocks = Stock::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'specified_category', 'genres', 'specified_genre'));
+        return view('shop', compact('stocks', 'page_name', 'genres'));
+    }
+
+    /**
+     * Search Page
+     *
+     * @return View
+     */
+    public function search(Request $request)
+    {
+        // リクエストにカテゴリが存在するとき、指定カテゴリ取得
+        $specified_category = Category::where('name_en', $request->category)->first();
+        // カテゴリが存在するとき、指定ジャンル一覧を取得
+        $genres = null;
+        if (!empty($specified_category)) {
+            $genres = Genre::where('category_id', $specified_category->id)->get();
+        }
+        $page_name = "「{$request->free_word}」の検索結果";
+
+        // リクエストからストックの条件を指定
+        $stocks = Stock::when($genres, function ($query, $genres) {
+            return $query->whereIn('genre_id', $genres->pluck('id'));
+        })
+        ->when($request->free_word, function ($query, $free_word) {
+            return $query->whereRaw("match(`search_tag`) against (? IN BOOLEAN MODE)", [$free_word]);
+        })
+        ->with('genre.category')
+        ->Paginate(6);
+
+        return view('shop', compact('stocks', 'page_name', 'genres'));
     }
 
     /**
@@ -63,7 +95,7 @@ class ShopController extends Controller
      *
      * @return View
      */
-    public function ProductDetail($product_name_en, $category_id, $genre_id)
+    public function productDetail($product_name_en, $category_id, $genre_id)
     {
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
