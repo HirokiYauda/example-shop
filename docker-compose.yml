@@ -1,4 +1,7 @@
 version: "3"
+volumes:
+  vendor-store:
+  node_modules-store:
 services:
   web:
     image: nginx:latest
@@ -11,6 +14,8 @@ services:
     build: ./docker/php
     volumes:
       - .:/var/www/html
+      - vendor-store:/var/www/html/vendor
+      - node_modules-store:/var/www/html/node_modules
     depends_on: ["mysql"]
   mysql:
     image: mysql:5.7
