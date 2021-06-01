@@ -20,13 +20,6 @@
                     <p class="lead text-danger mb-1">{{number_format($stock->price) . "円" ?? ""}}</p>
                     <p class="card-text"><small>{{$stock->detail}}</small></p>
                 </div>
-                <div class="card-footer bg-white border-white text-center mb-2">
-                    <form action="mycart" method="post">
-                        @csrf
-                        <input type="hidden" name="stock_id" value="{{ $stock->id }}">
-                        <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
-                    </form>
-                </div>
             </div>
         </div>
     @endforeach
