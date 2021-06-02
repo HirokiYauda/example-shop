@@ -21,11 +21,11 @@
         {{-- サイドカラム --}}
         <div class="side col-lg-3 bg-white p-4">
             <p class="lead text-danger mb-2">{{number_format($stock->price) . "円" ?? ""}}</p>
-            <form action="mycart" method="post">
+            <form action="{{ route('add_cart') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     数量：
-                    <select name="count" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <select name="qty" class="form-select form-select-sm" aria-label=".form-select-sm example">
                         @for ($count = 1; $count <= 10; $count++)
                             <option value="1">{{$count}}</option>
                         @endfor

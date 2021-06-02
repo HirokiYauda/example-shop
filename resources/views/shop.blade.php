@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<h1 class="h3 text-center mb-3">{{$page_name}}</h1>
+<h1 class="h3 text-center mb-4">{{$page_name}}</h1>
 <div class="row">
     @foreach($stocks as $stock)
         <div class="col-sm-6 col-md-3 mb-4">
@@ -23,7 +23,7 @@
                     <p class="card-text"><small>{{$stock->detail}}</small></p>
                 </div>
                 <div class="card-footer bg-white border-white text-center mb-2">
-                    <form action="mycart" method="post">
+                    <form action="{{ route('add_cart') }}" method="post">
                         @csrf
                         <input type="hidden" name="stock_id" value="{{ $stock->id }}">
                         <button type="submit" class="btn btn-outline-primary">カートに入れる</button>

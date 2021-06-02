@@ -13,13 +13,13 @@
 Route::get('/', 'ShopController@index')->name('top');
 Route::get('/search', 'ShopController@search')->name('search');
 Route::get('/detail/{product}/', 'ShopController@productDetail')->name('product_detail');
+Route::get('/cart', 'CartController@index')->name('cart_index');
+Route::post('/cart', 'CartController@addCart')->name('add_cart');
+
 Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
 Route::get('/{category}/{genre}', 'ShopController@genreNarrowingDown')->name('genre_narrowing_down');
 
 
-
-Route::get('/cart', 'ShopController@myCart')->name('cart');
-Route::post('/cart', 'ShopController@addMycart')->name('add_cart');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/cartdelete', 'ShopController@deleteCart')->name('delete_cart');

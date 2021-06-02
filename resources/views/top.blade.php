@@ -2,7 +2,7 @@
 @section('title', 'Exapmle Shop')
 
 @section('content')
-<h1 class="h3 text-center mb-3">商品一覧</h1>
+<h1 class="h3 text-center mb-4">商品一覧</h1>
 <div class="row">
     @foreach($stocks as $stock)
         <div class="col-sm-6 col-md-3 mb-4">

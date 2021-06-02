@@ -32,9 +32,9 @@
                             @if (Route::has('register'))
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('会員登録') }}</a>
                             @endif
-                            <a class="dropdown-item" href="{{ route('cart') }}">カートを見る</a>
+                            <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
                         @else
-                            <a class="dropdown-item" href="{{ route('cart') }}">カートを見る</a>
+                            <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
                             <a class="dropdown-item" href="{{ route('mypage_edit') }}">アカウント管理</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -77,7 +77,7 @@
                             </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('cart') }}">カートを見る</a>
+                                <a class="nav-link" href="{{ route('cart_index') }}">カートを見る</a>
                             </li>
                         </ul>
                     @else
@@ -88,8 +88,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ url('/mycart') }}">カートを見る</a>
-                            <a class="dropdown-item" href="{{ url('/mypage/edit') }}">アカウント管理</a>
+                            <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
+                            <a class="dropdown-item" href="{{ route('mypage_edit') }}">アカウント管理</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('ログアウト') }}
