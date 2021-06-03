@@ -21,19 +21,24 @@
         {{-- サイドカラム --}}
         <div class="side col-lg-3 bg-white p-4">
             <p class="lead text-danger mb-2">{{number_format($stock->price) . "円" ?? ""}}</p>
-            <form action="{{ route('add_cart') }}" method="post">
-                @csrf
-                <div class="mb-3">
-                    数量：
-                    <select name="qty" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        @for ($count = 1; $count <= 10; $count++)
-                            <option value="1">{{$count}}</option>
-                        @endfor
-                    </select>
-                </div>
-                <input type="hidden" name="stock_id" value="{{ $stock->id }}">
-                <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
-            </form>
+            @if(!empty($maxQuantity))
+                <form action="{{ route('add_cart') }}" method="post">
+                    @csrf
+                    <div class="mb-3">
+                        数量：
+                        <select name="qty" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            @for ($count = 1; $count <= $maxQuantity; $count++)
+                                <option value="{{$count}}">{{$count}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                    <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
+                </form>
+            @else
+                <p class="text-danger mb-1">購入可能数が上限のため、これ以上カートに入れられません。</p>
+                <button type="button" class="btn btn-secondary" disabled>カートに入れる</button>
+            @endif
         </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Genre;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Thanks;
+use Cart;
 
 class ShopController extends Controller
 {
@@ -103,7 +104,10 @@ class ShopController extends Controller
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $stock->genre->category->id)->get();
         $category_name_en = $stock->genre->category->name_en;
+        // カートを参照して、購入可能な数量を取得
+        $cc = app()->make(CartController::class);
+        $maxQuantity = $cc->itemMaxQuantity($stock->id);
 
-        return view('detail', compact('stock', 'genres', 'category_name_en'));
+        return view('detail', compact('stock', 'genres', 'category_name_en', 'maxQuantity'));
     }
 }

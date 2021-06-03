@@ -16,17 +16,26 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::content();
+
         return view('cart', compact('carts'));
     }
 
     /**
      * Add to cart
      *
-     * @return \Illuminate\Http\Response
+     * @return Redirect
      */
     public function addCart(Request $request)
     {
         $stock = Stock::findOrFail($request->stock_id);
+        // 商品を購入可能な状態かチェック
+        $qty = $request->qty ?? 1;
+        $check = $this->cartCheck($stock->id, $qty);
+        // 問題があればリダイレクト
+        if (empty($check['result'])) {
+            return redirect()->route('cart_index')->with("caution_message", $check['message']);
+        }
+
         Cart::add([
             'id' => $stock->id,
             'name' => $stock->name,
@@ -36,7 +45,57 @@ class CartController extends Controller
             'options' => ['name_en'=> $stock->name_en, 'imgpath' => $stock->imgpath]
         ]);
 
+        return redirect()->route('cart_index');
+    }
+
+    /**
+     * 商品を購入可能な状態かチェック
+     *
+     * @return Array
+     */
+    public function cartCheck($stockId, $qty)
+    {
+        $res = [
+            "result" => true,
+            "message" => ""
+        ];
+
         $carts = Cart::content();
-        return view('cart', compact('carts'));
+        // 既にカートに商品が入っているとき
+        if (!empty($carts)) {
+            $updateItem = $carts->firstWhere('id', $stockId);
+            // カートに存在する商品に更新が入るとき
+            if (!empty($updateItem)) {;
+                // 1商品の最大上限数を超過する場合、リダイレクト
+                if (($updateItem->qty + $qty) > config("cart.count.max_item")) {
+                    $res["result"] = false;
+                    $res["message"] = "1度のお買い物につき、1つの商品は、最大" . config("cart.count.max_item") . "点までとなります。";
+                }
+            }
+
+            // 1カートの最大商品数を超過する場合、リダイレクト
+            if (Cart::countItems() > config("cart.count.max_cart")) {
+                $res["result"] = false;
+                $res["message"] = "1度のお買い物につき、カートに入れられる商品は、最大" . config("cart.count.max_cart") . "点までとなります。";
+            }
+        }
+        
+        return $res;
+    }
+
+    /**
+     * カート内で、指定商品の購入可能な数量を取得
+     *
+     * @return Array
+     */
+    public function itemMaxQuantity($stockId)
+    {
+        $maxQuantity = config("cart.count.max_item");
+        $designatedItemsInCart = Cart::content()->firstWhere('id', $stockId);
+        if (!empty($designatedItemsInCart)) {
+            $maxQuantity = config("cart.count.max_item") - $designatedItemsInCart->qty;
+        }
+
+        return $maxQuantity;
     }
 }
