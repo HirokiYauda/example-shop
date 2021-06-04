@@ -4,8 +4,6 @@
 @section('content')
 <div class="container">
     <h1 class="h3 text-center mb-4">ショッピングカート</h1>
-    <div class="row justify-content-between">
-        <cart-list :carts='@json($carts, JSON_FORCE_OBJECT)' :caution_message="'{{session('caution_message') ?? ""}}'"></cart-list>
-    </div>
+    <cart-list :carts='@json($carts, JSON_FORCE_OBJECT)' :carts_info='@json($carts_info, JSON_FORCE_OBJECT)' :caution_message="'{{session('caution_message') ?? ""}}'" />
 </div>
 @endsection

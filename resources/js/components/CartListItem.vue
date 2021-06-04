@@ -9,7 +9,6 @@
         </div>
         <div class="col-lg-8 bg-white px-2">
             <h2>{{ cart.name }}</h2>
-            <p>{{ cart.qty }}</p>
             <select
                 name="qty"
                 v-model="innerSearchText"
@@ -39,7 +38,7 @@ export default {
             },
             set(value) {
                 this.$emit("change", value);
-            },
+            }
         },
     },
 };

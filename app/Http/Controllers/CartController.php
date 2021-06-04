@@ -16,8 +16,12 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::content();
-
-        return view('cart', compact('carts'));
+        $carts_info = [
+            'count' => Cart::count() ?? 0, // カート内の合計商品数
+            'total' => Cart::total() ?? 0 // 合計金額(税込)
+        ];
+        
+        return view('cart', compact('carts', 'carts_info'));
     }
 
     /**
