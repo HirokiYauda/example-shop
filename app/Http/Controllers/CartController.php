@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock;
-use Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -18,7 +18,8 @@ class CartController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0 // 合計金額(税込)
+            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'update_error_message' => config('cart.update_error_message')
         ];
         
         return view('cart', compact('carts', 'carts_info'));

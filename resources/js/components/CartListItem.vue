@@ -22,6 +22,7 @@
             <p class="lead text-danger mb-1">
                 {{ cart.price ? cart.price + "円" : "" }}
             </p>
+            <button type="button" @click="deleteItem" class="btn btn-light">削除</button>
         </div>
     </div>
 </template>
@@ -37,10 +38,35 @@ export default {
                 return this.$props.cart.qty;
             },
             set(value) {
+                this.quantityUpdate(value);
                 this.$emit("change", value);
             }
         },
     },
+    methods: {
+        async quantityUpdate(value) {
+            try {
+                const res = await axios.put('/api/quantity_update/', {quantity: value, row_id: this.$props.cart.rowId});
+                this.$emit('updateCart', res.data);
+            } catch (error) {
+                // const {status, statusText } = error.response;
+                // console.log(`Error! HTTP Status: ${status} ${statusText}`);
+                this.$emit('setError');
+            }
+        },
+        async deleteItem() {
+            try {
+                const res = await axios.put('/api/delete_item/', {row_id: this.$props.cart.rowId});
+                this.$emit('updateCart', res.data);
+                this.$destroy();
+                this.$el.parentNode.removeChild(this.$el);
+            } catch (error) {
+                // const {status, statusText } = error.response;
+                // console.log(`Error! HTTP Status: ${status} ${statusText}`);
+                this.$emit('setError');
+            }
+        }
+    }
 };
 </script>
 

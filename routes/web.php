@@ -16,6 +16,11 @@ Route::get('/detail/{product}/', 'ShopController@productDetail')->name('product_
 Route::get('/cart', 'CartController@index')->name('cart_index');
 Route::post('/cart', 'CartController@addCart')->name('add_cart');
 
+// セッションを使用するため、web側でルート定義
+Route::put('/api/quantity_update', 'APi\CartApi@quantityUpdate')->name('api_quantity_update');
+Route::put('/api/delete_item', 'APi\CartApi@deleteItem')->name('api_delete_item');
+
+
 Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
 Route::get('/{category}/{genre}', 'ShopController@genreNarrowingDown')->name('genre_narrowing_down');
 
