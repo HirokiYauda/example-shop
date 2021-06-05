@@ -89,7 +89,7 @@ class RegisterController extends Controller
         $this->guard()->login($user);
 
         if ($request->reference === 'cart') {
-            return redirect(route('order'));
+            return redirect()->route('order');
         }
         return redirect($this->redirectPath());
     }

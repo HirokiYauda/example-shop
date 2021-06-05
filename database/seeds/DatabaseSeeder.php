@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             StocksTableSeeder::class,
             CategoriesTableSeeder::class,
             GenresTableSeeder::class,
+            PrefsTableSeeder::class,
         ]);
     }
 }

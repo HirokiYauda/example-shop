@@ -6,6 +6,14 @@
                 <p class="lead text-danger mb-1" v-show="cautionMessage">{{cautionMessage}}</p>
                 <!-- メインカラム -->
                 <div key="existItem">
+                    <div class="row justify-content-between bg-white px-2 py-3 mb-3">
+                        <div class="bg-white px-2">
+                            <dl>
+                                <dt>お届け先住所</dt>
+                                <dd></dd>
+                            </dl>
+                        </div>
+                    </div>
 
                     <!-- 注文する商品 -->
                     <div class="row justify-content-between bg-white px-2 py-3 mb-3" v-for="cart in carts" :key="cart.id">
