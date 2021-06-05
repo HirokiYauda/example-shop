@@ -38,7 +38,6 @@ class CartController extends Controller
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
             'total' => Cart::total() ?? 0, // 合計金額(税込)
-            'update_error_message' => config('cart.update_error_message')
         ];
         
         return view('order', compact('carts', 'carts_info'));

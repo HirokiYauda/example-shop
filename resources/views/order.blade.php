@@ -1,8 +1,11 @@
-@extends('layouts.default')
+@extends('layouts.simple')
 @section('title', 'Exapmle Shop')
 
 @section('content')
 <div class="container">
-    <h1 class="h3 text-center mb-4">注文確認</h1>
+    <order
+        :carts='@json($carts, JSON_FORCE_OBJECT)'
+        :carts_info='@json($carts_info, JSON_FORCE_OBJECT)'
+    />
 </div>
 @endsection
