@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Auth;
 
 class CartController extends Controller
 {
@@ -21,9 +22,29 @@ class CartController extends Controller
             'total' => Cart::total() ?? 0, // 合計金額(税込)
             'update_error_message' => config('cart.update_error_message')
         ];
+        $is_login = Auth::check();
         
-        return view('cart', compact('carts', 'carts_info'));
+        return view('cart', compact('carts', 'carts_info', 'is_login'));
     }
+
+    /**
+     * Order Page
+     *
+     * @return View
+     */
+    public function order()
+    {
+        $carts = Cart::content();
+        $carts_info = [
+            'count' => Cart::count() ?? 0, // カート内の合計商品数
+            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'update_error_message' => config('cart.update_error_message')
+        ];
+        
+        return view('order', compact('carts', 'carts_info'));
+    }
+
+
 
     /**
      * Add to cart

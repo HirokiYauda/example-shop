@@ -68,6 +68,7 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="reference" value="{{request()->reference ?? ''}}">
                     </form>
                 </div>
             </div>

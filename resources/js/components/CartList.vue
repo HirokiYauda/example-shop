@@ -21,11 +21,14 @@
             <p>小計({{cartInfo.count}}点)</p>
             <p>{{cartInfo.total}}円 (税込)</p>
 
-            <form action="" method="post" v-if="isCart">
-                <input type="hidden" name="stock_id" value="">
-                <button type="submit" class="btn btn-outline-primary">レジに進む</button>
-            </form>
-            <button type="button" class="btn btn-outline-secondary" disabled v-else>レジに進む</button>
+            <div v-if="is_login">
+                <a href="/order" v-if="isCart" class="btn btn-outline-primary">レジに進む</a>
+                <button type="button" class="btn btn-outline-secondary" disabled v-else>レジに進む</button>
+            </div>
+            <div v-else>
+                <a href="/register?reference=cart" v-if="isCart" class="btn btn-outline-primary">会員登録を行って購入する</a>
+                <a href="/register" v-else class="btn btn-outline-primary">会員登録を行って購入する</a>
+            </div>
         </div>
     </div>
 </template>
@@ -45,7 +48,8 @@ export default {
     props: {
         carts: Object,
         caution_message: String,
-        carts_info: Object
+        carts_info: Object,
+        is_login: Number
     },
     methods: {
         setError() {

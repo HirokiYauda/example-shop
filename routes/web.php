@@ -20,16 +20,12 @@ Route::post('/cart', 'CartController@addCart')->name('add_cart');
 Route::put('/api/quantity_update', 'APi\CartApi@quantityUpdate')->name('api_quantity_update');
 Route::put('/api/delete_item', 'APi\CartApi@deleteItem')->name('api_delete_item');
 
-
-Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
-Route::get('/{category}/{genre}', 'ShopController@genreNarrowingDown')->name('genre_narrowing_down');
-
-
-
 Route::group(['middleware' => ['auth']], function () {
-    Route::post('/cartdelete', 'ShopController@deleteCart')->name('delete_cart');
-    Route::post('/checkout', 'ShopController@checkout')->name('checkout');
+    Route::get('/order', 'CartController@order')->name('order');
     Route::get('/myage/edit', 'MypageController@myCart')->name('mypage_edit');
 });
 
 Auth::routes();
+
+Route::get('/{category}', 'ShopController@categoryNarrowingDown')->name('category_narrowing_down');
+Route::get('/{category}/{genre}', 'ShopController@genreNarrowingDown')->name('genre_narrowing_down');
