@@ -7,7 +7,6 @@
 import Vue from 'vue';
 import CartList from './components/CartList';
 import CartListItem from './components/CartListItem';
-import Order from './components/Order';
 
 require('./bootstrap');
 
@@ -27,7 +26,6 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('cart-list', CartList);
 Vue.component('cart-list-item', CartListItem);
-Vue.component('order', Order);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

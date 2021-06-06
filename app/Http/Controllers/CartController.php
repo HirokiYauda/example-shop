@@ -45,9 +45,13 @@ class CartController extends Controller
             return redirect()->route('top');
         }
 
-        $user = Auth::user()->only('full_address');
+        $user = Auth::user();
+        $caution_messages = [];
+        if(empty($user->full_address)) {
+            $caution_messages[] = "住所を登録後に、ご購入ください";
+        }
         
-        return view('order', compact('carts', 'carts_info', 'user'));
+        return view('order', compact('carts', 'carts_info', 'user', 'caution_messages'));
     }
 
 
