@@ -34,7 +34,7 @@ class MypageController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id.',id'],
             'zip' => ['required', new ZipcodeRule],
-            'pref' => ['required', 'integer'],
+            'pref_id' => ['required', 'integer'],
             'address1' => ['required', 'string', 'max:200'],
             'address2' => ['required', 'string', 'max:200'],
         ]);

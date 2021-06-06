@@ -10,7 +10,7 @@
                         <div class="bg-white px-2">
                             <dl>
                                 <dt>お届け先住所</dt>
-                                <dd></dd>
+                                <dd>{{address}}</dd>
                             </dl>
                         </div>
                     </div>
@@ -53,12 +53,14 @@ export default {
                 count: this.$props.carts_info.count,
                 total: this.$props.carts_info.total
             },
-            cautionMessage: ""
+            cautionMessage: "",
+            address: (this.$props.user.full_address !== "") ? this.$props.user.full_address : "住所が登録されていません"
         }
     },
     props: {
         carts: Object,
         carts_info: Object,
+        user: Object
     },
     methods: {
     }

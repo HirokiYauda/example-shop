@@ -42,7 +42,7 @@ export default {
                 count: this.$props.carts_info.count,
                 total: this.$props.carts_info.total
             },
-            cautionMessage: this.$props.caution_message ?? ""
+            cautionMessage: this.$props.caution_message
         }
     },
     props: {

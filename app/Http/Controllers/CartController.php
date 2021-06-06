@@ -40,12 +40,12 @@ class CartController extends Controller
             'total' => Cart::total() ?? 0, // 合計金額(税込)
         ];
 
-        $user = Auth::user();
-
         // カートに商品が存在しない場合は、トップへリダイレクト
         if ($carts_info["count"] <= 0) {
             return redirect()->route('top');
         }
+
+        $user = Auth::user()->only('full_address');
         
         return view('order', compact('carts', 'carts_info', 'user'));
     }

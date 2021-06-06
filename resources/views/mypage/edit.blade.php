@@ -42,10 +42,10 @@
                 <input type="text" name="zip" value="{{old('zip', $user->zip ?? "")}}" class="p-postal-code form-control" id="zip" size="8" maxlength="8">
             </div>
             <div class="mb-3">
-                <label for="pref" class="form-label">都道府県</label>
-                <select name="pref" class="form-control p-region-id" id="pref">
+                <label for="pref_id" class="form-label">都道府県</label>
+                <select name="pref_id" class="form-control p-region-id" id="pref_id">
                     @foreach ($prefs as $pref)
-                        <option value="{{$pref->id}}" @if(old('pref', $user->pref ?? 0) == $pref->id) selected @endif>{{$pref->name}}</option>
+                        <option value="{{$pref->id}}" @if(old('pref_id', $user->pref_id ?? 0) == $pref->id) selected @endif>{{$pref->name}}</option>
                     @endforeach
                 </select>
             </div>

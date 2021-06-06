@@ -6,6 +6,7 @@
     <order
         :carts='@json($carts, JSON_FORCE_OBJECT)'
         :carts_info='@json($carts_info, JSON_FORCE_OBJECT)'
+        :user='@json($user, JSON_FORCE_OBJECT)'
     />
 </div>
 @endsection
