@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStocksTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('genre_id');
             $table->string('name', '100');
@@ -25,7 +25,7 @@ class CreateStocksTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::statement('ALTER TABLE stocks ADD FULLTEXT index search_tag (`search_tag`) with parser ngram');
+        DB::statement('ALTER TABLE products ADD FULLTEXT index search_tag (`search_tag`) with parser ngram');
     }
 
     /**
@@ -35,6 +35,6 @@ class CreateStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('products');
     }
 }

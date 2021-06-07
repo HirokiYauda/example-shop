@@ -6,7 +6,7 @@
 お客様が購入した商品は<br>
 
 @foreach ($checkout_items as $item)
-・{{ $item->stock->name }}｜{{ $item->stock->fee }}円
+・{{ $item->product->name }}｜{{ $item->product->fee }}円
 <br>
 @endforeach
 

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StocksTableSeeder extends Seeder
+class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,8 @@ class StocksTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('stocks')->truncate(); //2回目実行の際にシーダー情報をクリア
-        DB::table('stocks')->insert([
+        DB::table('products')->truncate(); //2回目実行の際にシーダー情報をクリア
+        DB::table('products')->insert([
             'name' => 'フィルムカメラ',
             'name_en' => 'film-camera',
             'genre_id' => 1,
@@ -22,7 +22,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'filmcamera.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'イヤホン',
             'name_en' => 'iyahon',
             'genre_id' => 1,
@@ -32,7 +32,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'iyahon.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => '時計',
             'name_en' => 'tokei',
             'genre_id' => 1,
@@ -42,7 +42,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'clock.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => '地球儀',
             'name_en' => 'tikyugi',
             'genre_id' => 2,
@@ -53,7 +53,7 @@ class StocksTableSeeder extends Seeder
         ]);
  
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => '腕時計',
             'name_en' => 'udedokei',
             'genre_id' => 2,
@@ -63,7 +63,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'watch.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'カメラレンズ35mm',
             'name_en' => 'camera-renzu35mm',
             'genre_id' => 3,
@@ -73,7 +73,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'lens.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'シャンパン',
             'name_en' => 'syanpan',
             'genre_id' => 3,
@@ -83,7 +83,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'shanpan.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'ビール',
             'name_en' => 'beer',
             'genre_id' => 4,
@@ -93,7 +93,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'beer.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'やかん',
             'name_en' => 'yakan',
             'genre_id' => 4,
@@ -103,7 +103,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'yakan.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => '精米',
             'name_en' => 'seimai',
             'genre_id' => 5,
@@ -113,7 +113,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'kome.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'パソコン',
             'name_en' => 'pacokon',
             'genre_id' => 5,
@@ -123,7 +123,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'pc.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'アコースティックギター',
             'name_en' => 'acostic-guiter',
             'genre_id' => 6,
@@ -133,7 +133,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'aguiter.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'エレキギター',
             'name_en' => 'eleki-guiter',
             'genre_id' => 6,
@@ -143,7 +143,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'eguiter.jpg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => '加湿器',
             'name_en' => 'kasituki',
             'genre_id' => 7,
@@ -153,7 +153,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'steamer.jpeg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'マウス',
             'name_en' => 'mouse',
             'genre_id' => 8,
@@ -163,7 +163,7 @@ class StocksTableSeeder extends Seeder
             'imgpath' => 'mouse.jpeg',
         ]);
  
-        DB::table('stocks')->insert([
+        DB::table('products')->insert([
             'name' => 'Android Garxy10',
             'name_en' => 'Android-Garxy10',
             'genre_id' => 9,

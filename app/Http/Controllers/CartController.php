@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Stock;
+use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Auth;
 
@@ -63,22 +63,22 @@ class CartController extends Controller
      */
     public function addCart(Request $request)
     {
-        $stock = Stock::findOrFail($request->stock_id);
+        $product = Product::findOrFail($request->product_id);
         // 商品を購入可能な状態かチェック
         $qty = $request->qty ?? 1;
-        $check = $this->cartCheck($stock->id, $qty);
+        $check = $this->cartCheck($product->id, $qty);
         // 問題があればリダイレクト
         if (empty($check['result'])) {
             return redirect()->route('cart_index')->with("caution_message", $check['message']);
         }
 
         Cart::add([
-            'id' => $stock->id,
-            'name' => $stock->name,
+            'id' => $product->id,
+            'name' => $product->name,
             'qty' => $request->qty ?? 1,
-            'price' => $stock->price,
+            'price' => $product->price,
             'weight' => $request->weight ?? 1,
-            'options' => ['name_en'=> $stock->name_en, 'imgpath' => $stock->imgpath]
+            'options' => ['name_en'=> $product->name_en, 'imgpath' => $product->imgpath]
         ]);
 
         return redirect()->route('cart_index');
@@ -89,7 +89,7 @@ class CartController extends Controller
      *
      * @return Array
      */
-    public function cartCheck($stockId, $qty)
+    public function cartCheck($productId, $qty)
     {
         $res = [
             "result" => true,
@@ -99,7 +99,7 @@ class CartController extends Controller
         $carts = Cart::content();
         // 既にカートに商品が入っているとき
         if (!empty($carts)) {
-            $updateItem = $carts->firstWhere('id', $stockId);
+            $updateItem = $carts->firstWhere('id', $productId);
             // カートに存在する商品に更新が入るとき
             if (!empty($updateItem)) {;
                 // 1商品の最大上限数を超過する場合、リダイレクト
@@ -124,10 +124,10 @@ class CartController extends Controller
      *
      * @return Array
      */
-    public function itemMaxQuantity($stockId)
+    public function itemMaxQuantity($productId)
     {
         $maxQuantity = config("cart.count.max_item");
-        $designatedItemsInCart = Cart::content()->firstWhere('id', $stockId);
+        $designatedItemsInCart = Cart::content()->firstWhere('id', $productId);
         if (!empty($designatedItemsInCart)) {
             $maxQuantity = config("cart.count.max_item") - $designatedItemsInCart->qty;
         }

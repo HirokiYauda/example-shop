@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Stock;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\Genre;
 use Illuminate\Support\Facades\Mail;
@@ -20,8 +20,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::with('genre.category')->Paginate(6);
-        return view('top', compact('stocks'));
+        $products = Product::with('genre.category')->Paginate(6);
+        return view('top', compact('products'));
     }
 
     /**
@@ -37,9 +37,9 @@ class ShopController extends Controller
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
         // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込み
-        $stocks = Stock::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
+        $products = Product::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
 
-        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
+        return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -57,8 +57,8 @@ class ShopController extends Controller
         $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
         $page_name = "「{$specified_genre->name}」の商品一覧";
         // 必須パラメータのジャンルから、IDで絞り込み
-        $stocks = Stock::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
-        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
+        $products = Product::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
+        return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -79,8 +79,8 @@ class ShopController extends Controller
         }
         $page_name = "「{$request->free_word}」の検索結果";
 
-        // リクエストからストックの条件を指定
-        $stocks = Stock::when($genres, function ($query, $genres) {
+        // リクエストから商品の条件を指定
+        $products = Product::when($genres, function ($query, $genres) {
             return $query->whereIn('genre_id', $genres->pluck('id'));
         })
         ->when($request->free_word, function ($query, $free_word) {
@@ -89,7 +89,7 @@ class ShopController extends Controller
         ->with('genre.category')
         ->Paginate(6);
 
-        return view('shop', compact('stocks', 'page_name', 'genres', 'category_name_en'));
+        return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
@@ -100,14 +100,14 @@ class ShopController extends Controller
     public function productDetail($product_name_en)
     {
         // EN商品名から単一商品情報を取得。存在しないときは例外エラー
-        $stock = Stock::where('name_en', $product_name_en)->firstOrFail();
+        $product = Product::where('name_en', $product_name_en)->firstOrFail();
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得
-        $genres = Genre::where('category_id', $stock->genre->category->id)->get();
-        $category_name_en = $stock->genre->category->name_en;
+        $genres = Genre::where('category_id', $product->genre->category->id)->get();
+        $category_name_en = $product->genre->category->name_en;
         // カートを参照して、購入可能な数量を取得
         $cc = app()->make(CartController::class);
-        $maxQuantity = $cc->itemMaxQuantity($stock->id);
+        $maxQuantity = $cc->itemMaxQuantity($product->id);
 
-        return view('detail', compact('stock', 'genres', 'category_name_en', 'maxQuantity'));
+        return view('detail', compact('product', 'genres', 'category_name_en', 'maxQuantity'));
     }
 }

@@ -2,25 +2,25 @@
 @section('title', 'Exapmle Shop')
 
 @section('content')
-{{ Breadcrumbs::render('detail', $stock) }}
+{{ Breadcrumbs::render('detail', $product) }}
 <div class="container">
     <div class="row justify-content-between">
         {{-- メインカラム --}}
         <div class="column col-lg-8 bg-white p-4">
             <div class="row justify-content-between">
                 <div class="col-lg-4 bg-white px-2">
-                    <img class="obj-fit" src="/images/{{$stock->imgpath}}" alt="">
+                    <img class="obj-fit" src="/images/{{$product->imgpath}}" alt="">
                 </div>
                 <div class="col-lg-8 bg-white px-2">
-                    <h2>{{ $stock->name }}</h2>
-                    <p class="lead text-danger mb-1">{{number_format($stock->price) . "円" ?? ""}}</p>
-                    <p>{{ $stock->detail }}</p>
+                    <h2>{{ $product->name }}</h2>
+                    <p class="lead text-danger mb-1">{{number_format($product->price) . "円" ?? ""}}</p>
+                    <p>{{ $product->detail }}</p>
                 </div>
             </div>
         </div>
         {{-- サイドカラム --}}
         <div class="side col-lg-3 bg-white p-4">
-            <p class="lead text-danger mb-2">{{number_format($stock->price) . "円" ?? ""}}</p>
+            <p class="lead text-danger mb-2">{{number_format($product->price) . "円" ?? ""}}</p>
             @if(!empty($maxQuantity))
                 <form action="{{ route('add_cart') }}" method="post">
                     @csrf
@@ -32,7 +32,7 @@
                             @endfor
                         </select>
                     </div>
-                    <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
                 </form>
             @else
