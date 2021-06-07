@@ -32,7 +32,7 @@ class CartController extends Controller
      *
      * @return View
      */
-    public function order()
+    public function order(Product $product)
     {
         $carts = Cart::content();
         $carts_info = [
@@ -51,7 +51,7 @@ class CartController extends Controller
             $caution_messages[] = "住所を登録後に、ご購入ください";
         }
         
-        return view('order', compact('carts', 'carts_info', 'user', 'caution_messages'));
+        return view('order', compact('carts', 'carts_info', 'user', 'caution_messages', 'product'));
     }
 
 

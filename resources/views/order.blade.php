@@ -38,9 +38,15 @@
                         </div>
                         <div class="col-lg-8 bg-white px-2">
                             <h2>{{$cart->name}}</h2>
+                            <p>数量: {{$cart->qty}}</p>
                             <p class="lead text-danger mb-1">
                                 {{$cart->price ? $cart->price . "円" : ""}}
                             </p>
+                            @if($cart->qty > $product::find($cart->id)->stock)
+                                <p class="text-danger mb-1">
+                                    この商品は、一時的に在庫切れ、もしくは購入数量が在庫数よりも多いため、入荷時期が未定の商品です。
+                                </p>
+                            @endif
                         </div>
                     </div>
                 @endforeach

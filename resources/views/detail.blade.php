@@ -14,6 +14,9 @@
                 <div class="col-lg-8 bg-white px-2">
                     <h2>{{ $product->name }}</h2>
                     <p class="lead text-danger mb-1">{{number_format($product->price) . "円" ?? ""}}</p>
+                    @if(empty($product->stock))
+                        <p class="text-danger mb-1">この商品は、一時的に在庫切れで入荷時期は未定です。</p>
+                    @endif
                     <p>{{ $product->detail }}</p>
                 </div>
             </div>
