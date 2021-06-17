@@ -20,6 +20,9 @@
                     <div class="bg-white px-2">
                         <dl>
                             <dt>お届け先住所</dt>
+                            @if (session('update_message'))
+                                <p class="text-danger">{{ session('update_message') }}</p>
+                            @endif
                             <dd>{{$user->full_address ? $user->full_address : "住所が登録されていません"}}</dd>
                         </dl>
                         <div><a type="button" href="{{route('change_address')}}" class="btn btn-light">変更</a></div>
@@ -42,10 +45,15 @@
                             <p class="lead text-danger mb-1">
                                 {{$cart->price ? $cart->price . "円" : ""}}
                             </p>
-                            @if($cart->qty > $product::find($cart->id)->stock)
+                            @if(empty($product::find($cart->id)->stock))
+                                <p class="text-danger mb-1">この商品は、一時的に在庫切れで入荷時期は未定です。</p>
+                            @elseif($cart->qty > $product::find($cart->id)->stock)
                                 <p class="text-danger mb-1">
-                                    この商品は、一時的に在庫切れ、もしくは購入数量が在庫数よりも多いため、入荷時期が未定の商品です。
+                                    残りの在庫数は、{{$product::find($cart->id)->stock}}点です。<br>
+                                    購入数量が在庫数よりも多く、入荷時期が未定の商品となります。
                                 </p>
+                            @elseif($product::find($cart->id)->stock < 10)
+                                <p class="text-danger mb-1">残りの在庫数は、{{$product::find($cart->id)->stock}}点です。</p>
                             @endif
                         </div>
                     </div>
@@ -55,13 +63,17 @@
         </div>
         <!-- サイドカラム -->
         <div class="side col-lg-3 bg-white p-4">
-            <p>お支払い金額({{$carts_info['count']}}点)</p>
-            <p>{{$carts_info['total']}}円 (税込)</p>
-            @if(empty($caution_messages))
-                <button type="submit" class="btn btn-outline-primary">注文を確定する</button>
-            @else
-                <button type="button" class="btn btn-secondary" disabled>注文を確定する</button>
-            @endif
+            <form action="{{route('purchase')}}" method="POST">
+                @csrf
+                @method('PUT')
+                <p>お支払い金額({{$carts_info['count']}}点)</p>
+                <p>{{$carts_info['total']}}円 (税込)</p>
+                @if(empty($caution_messages))
+                    <button type="submit" class="btn btn-outline-primary">注文を確定する</button>
+                @else
+                    <button type="button" class="btn btn-secondary" disabled>注文を確定する</button>
+                @endif
+            </form>
         </div>
     </div>
 </div>

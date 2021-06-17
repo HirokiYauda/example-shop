@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.simple')
 
 @section('content')
 <div class="container-fluid">
@@ -8,8 +8,8 @@
            {{ Auth::user()->name }}さんご購入ありがとうございました</h1>
 
            <div class="card-body">
-               <p>ご登録頂いたメールアドレスへ決済情報をお送りしております。お手続き完了次第商品を発送致します。</p>
-               <a href="/">商品一覧へ</a>
+               <p>確認用のメールをお送りしております。お手続き完了次第商品を発送致します。</p>
+               <a href="{{route('top')}}">トップへ戻る</a>
            </div>
 
            </div>

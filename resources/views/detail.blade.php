@@ -35,6 +35,9 @@
                             @endfor
                         </select>
                     </div>
+                    @if(!empty($product->stock) && $product->stock < 10 )
+                        <p class="text-danger mb-1">残りの在庫数は、{{$product->stock}}点です。</p>
+                    @endif
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
                 </form>

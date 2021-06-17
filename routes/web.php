@@ -22,6 +22,8 @@ Route::put('/api/delete_item', 'APi\CartApi@deleteItem')->name('api_delete_item'
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/order', 'CartController@order')->name('order');
+    Route::put('/order', 'CartController@purchase')->name('purchase');
+    Route::get('/order/thanks', 'CartController@orderThanks')->name('order_thanks');
     Route::get('/mypage/edit', 'MypageController@edit')->name('mypage_edit');
     Route::get('/mypage/change_address', 'MypageController@changeAddress')->name('change_address');
     Route::put('/mypage/full_update', 'MypageController@fullUpdate')->name('mypage_full_update');

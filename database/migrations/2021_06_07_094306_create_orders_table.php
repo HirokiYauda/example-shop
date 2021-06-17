@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
-            $table->string('order_number', 50)->unique()->comment('注文番号');
+            $table->string('order_number', 50)->nullable()->unique()->comment('注文番号');
             $table->string('zip', 10);
             $table->tinyInteger('pref_id')->unsigned();
             $table->string('address1');
