@@ -117,7 +117,7 @@ class CartController extends Controller
                 $order_detail_data = [
                     'order_id' => $orderLastInsertID,
                     'product_id' => $cart->id,
-                    'price' => $cart->price,
+                    'price_including_tax' => $cart->price,
                     'qty' => $cart->qty,
                 ];
                 $register_flgs[] = $orderDetail->fill($order_detail_data)->save();

@@ -17,7 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('order_id');
             $table->bigInteger('product_id');
-            $table->string('price');
+            $table->string('price_including_tax');
             $table->integer('qty');
             $table->timestamps();
         });
