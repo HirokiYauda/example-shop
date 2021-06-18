@@ -25,7 +25,7 @@ class CartApi extends Controller
         $carts_info = [
             'updateItem' => $cart,
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0 // 合計金額(税込)
+            'total' => Cart::subtotal() ?? 0 // 合計金額(税込)
         ];
         
         return $carts_info;
@@ -46,7 +46,7 @@ class CartApi extends Controller
 
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0 // 合計金額(税込)
+            'total' => Cart::subtotal() ?? 0 // 合計金額(税込)
         ];
         
         return $carts_info;

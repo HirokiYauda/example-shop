@@ -22,4 +22,15 @@ class Product extends Model
     {
         return $this->belongsTo(Genre::class);
     }
+
+    /**
+     * 商品金額を税込みにして取得
+     *
+     * @param  int  $price
+     * @return int
+     */
+    public function getPriceAttribute($price)
+    {
+        return $price + ($price * (config("cart.tax") / 100));
+    }
 }

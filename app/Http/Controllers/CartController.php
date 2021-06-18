@@ -23,7 +23,7 @@ class CartController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
             'update_error_message' => config('cart.update_error_message')
         ];
         $is_login = Auth::check();
@@ -41,7 +41,7 @@ class CartController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
         ];
 
         // カートに商品が存在しない場合は、トップへリダイレクト
@@ -68,7 +68,7 @@ class CartController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
         ];
         // カートに商品が存在しない場合は、トップへリダイレクト
         if ($carts_info["count"] <= 0) {
@@ -117,7 +117,7 @@ class CartController extends Controller
                 $order_detail_data = [
                     'order_id' => $orderLastInsertID,
                     'product_id' => $cart->id,
-                    'price' => $cart->price + ($cart->price * (config("cart.tax") / 100)),
+                    'price' => $cart->price,
                     'qty' => $cart->qty,
                 ];
                 $register_flgs[] = $orderDetail->fill($order_detail_data)->save();
@@ -194,7 +194,6 @@ class CartController extends Controller
             $updateItem = $carts->firstWhere('id', $productId);
             // カートに存在する商品に更新が入るとき
             if (!empty($updateItem)) {
-                ;
                 // 1商品の最大上限数を超過する場合、リダイレクト
                 if (($updateItem->qty + $qty) > config("cart.count.max_item")) {
                     $res["result"] = false;
