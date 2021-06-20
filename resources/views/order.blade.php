@@ -65,7 +65,6 @@
         <div class="side col-lg-3 bg-white p-4">
             <form action="{{route('purchase')}}" method="POST">
                 @csrf
-                @method('PUT')
                 <p>お支払い金額({{$carts_info['count']}}点)</p>
                 <p>{{$carts_info['total']}}円 (税込)</p>
                 @if(empty($caution_messages))

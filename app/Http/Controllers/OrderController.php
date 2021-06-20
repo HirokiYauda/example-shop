@@ -40,7 +40,7 @@ class OrderController extends Controller
             // カートに入っている商品が購入可能かチェック
             $isAvailable = Util::checkProductInCartCanBePurchased();
             if (empty($isAvailable['result'])) {
-                $caution_messages = $isAvailable['not_available_message'];
+                $caution_messages = $isAvailable['not_available_messages'];
             }
         }
         
@@ -64,20 +64,23 @@ class OrderController extends Controller
             return redirect()->route('top');
         }
 
+        $user = Auth::user();
+        // 住所が登録済みかチェック
+        if (empty($user->full_address)) {
+            return redirect()->route('order');
+        }
+
         // カートに入っている商品が購入可能かチェック
         $isAvailable = Util::checkProductInCartCanBePurchased();
         if (empty($isAvailable['result'])) {
             return redirect()->route('order');
         }
 
-        $user = Auth::user();
         // 商品購入時のDB更新処理
-        $res = $this->updateOrder($carts, $carts_info, $user, $order, $orderDetail, $product);
+        $this->updateOrder($carts, $carts_info, $user, $order, $orderDetail, $product);
 
-        // 正常に登録が行うことができたら、カートを削除
-        if (!empty($res)) {
-            Cart::destroy();
-        }
+        // カートを削除
+        Cart::destroy();
         return redirect()->route('order_thanks');
     }
 
@@ -98,9 +101,7 @@ class OrderController extends Controller
      */
     public function updateOrder($carts, $carts_info, $user, $order, $orderDetail, $product)
     {
-        return DB::transaction(function () use ($carts, $carts_info, $user, $order, $orderDetail, $product) {
-            $register_flgs = [];
-
+        DB::transaction(function () use ($carts, $carts_info, $user, $order, $orderDetail, $product) {
             // 注文テーブルへ登録
             $order_data = [
                 'user_id' => $user->id,
@@ -110,12 +111,12 @@ class OrderController extends Controller
                 'address2' => $user->address2,
                 'total' => $carts_info['total'],
             ];
-            $register_flgs[] = $order->fill($order_data)->save();
+            $order->fill($order_data)->save();
             $orderLastInsertID = $order->id;
 
             // 注文テーブル登録後、注文番号を生成して、アップデート
             $order_number = Str::random(8) . sprintf('%08d', $user->id . $orderLastInsertID);
-            $register_flgs[] = $order->findOrFail($orderLastInsertID)->fill(['order_number' => $order_number])->save();
+            $order->findOrFail($orderLastInsertID)->fill(['order_number' => $order_number])->save();
 
             // 注文詳細テーブルへ登録 | 商品テーブルの在庫数を減算
             foreach ($carts as $cart) {
@@ -126,20 +127,12 @@ class OrderController extends Controller
                     'qty' => $cart->qty,
                 ];
                 // 注文詳細テーブルへ登録
-                $register_flgs[] = $orderDetail->fill($order_detail_data)->save();
+                $orderDetail->fill($order_detail_data)->save();
                 // 商品テーブルの在庫数を減算
                 $selectProduct = $product->findOrFail($cart->id);
                 $subtraction_number = ($selectProduct->stock >= $cart->qty) ? ($selectProduct->stock - $cart->qty) : 0;
-                $register_flgs[] = $selectProduct->fill(['stock' => $subtraction_number])->save();
+                $selectProduct->fill(['stock' => $subtraction_number])->save();
             }
-
-            // 全てのテーブルが正常に登録できたかチェック
-            $register_flgs_collection = collect($register_flgs);
-            $res = $register_flgs_collection->every(function ($value) {
-                return $value === true;
-            });
-
-            return $res;
         });
     }
 }

@@ -52,10 +52,21 @@ class CartController extends Controller
      */
     public function addCart(Request $request)
     {
-        $product = Product::findOrFail($request->product_id);
+        $validatedData = $request->validate([
+            'product_id' => ['required', 'integer'],
+            'qty' => 'nullable|integer|max:' . config("cart.default_max_qty"),
+            'weight' => 'nullable|integer'
+        ]);
+        if (empty($request->qty)) {
+            $validatedData['qty'] = 1;
+        }
+        if (empty($request->weight)) {
+            $validatedData['weight'] = 1;
+        }
+        
+        $product = Product::findOrFail($validatedData['product_id']);
         // 商品を購入可能な状態かチェック
-        $qty = $request->qty ?? 1;
-        $check = Util::checkAddProductToCart($product->id, $qty);
+        $check = Util::checkAddProductToCart($product->id, $validatedData['qty']);
         // 問題があればリダイレクト
         if (empty($check['result'])) {
             return redirect()->route('cart_index')->with("caution_messages", $check['messages']);
@@ -64,9 +75,9 @@ class CartController extends Controller
         Cart::add([
             'id' => $product->id,
             'name' => $product->name,
-            'qty' => $request->qty ?? 1,
+            'qty' => $validatedData['qty'],
             'price' => $product->price,
-            'weight' => $request->weight ?? 1,
+            'weight' => $validatedData['weight'],
             'options' => ['name_en'=> $product->name_en, 'imgpath' => $product->imgpath]
         ]);
 

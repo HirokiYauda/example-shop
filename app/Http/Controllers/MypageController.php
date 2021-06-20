@@ -29,12 +29,6 @@ class MypageController extends Controller
      */
     public function changeAddress()
     {
-        // orderページからのアクセス以外は、TOPリダイレクト
-        $refer = url()->previous();
-        if (strpos($refer, 'order') === false) {
-            return redirect()->route('top');
-        }
-
         $prefs = Pref::all();
         $user = Auth::user();
         
@@ -95,16 +89,10 @@ class MypageController extends Controller
         // ハイフントル
         $validatedData['zip'] = str_replace("-", "", $validatedData['zip']);
         
-        $res = DB::transaction(function () use ($validatedData, $user) {
-            return $user->fill($validatedData)->save();
+        DB::transaction(function () use ($validatedData, $user) {
+            $user->fill($validatedData)->save();
         });
 
-        // 更新の結果によってメッセージを変更
-        $message = "${title}の更新に失敗しました。お手数ですが、もう一度やり直してください。";
-        if (!empty($res)) {
-            $message = "${title}を更新しました。";
-        }
-
-        return $message;
+        return "${title}を更新しました。";
     }
 }
