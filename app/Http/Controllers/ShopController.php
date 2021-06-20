@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Genre;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\Thanks;
-use Cart;
+use Util;
 
 class ShopController extends Controller
 {
     /**
-     * Top Page
+     * トップ
      *
      * @return View
      */
@@ -25,7 +22,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Category narrowing down Page
+     * 商品一覧(カテゴリ絞り込み)
      *
      * @return View
      */
@@ -36,14 +33,14 @@ class ShopController extends Controller
         $page_name = "「{$specified_category->name}」の商品一覧";
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
-        // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込み
+        // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込みして、商品一覧を取得
         $products = Product::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
 
         return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
-     * Genre narrowing down Page
+     * 商品一覧(ジャンル絞り込み)
      *
      * @return View
      */
@@ -56,13 +53,13 @@ class ShopController extends Controller
         // 必須パラメータのジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
         $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
         $page_name = "「{$specified_genre->name}」の商品一覧";
-        // 必須パラメータのジャンルから、IDで絞り込み
+        // 必須パラメータのジャンルから、IDで絞り込みして、商品一覧を取得
         $products = Product::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
         return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
     /**
-     * Search Page
+     * 商品一覧(検索結果)
      *
      * @return View
      */
@@ -93,7 +90,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Product detail Page
+     * 商品詳細
      *
      * @return View
      */
@@ -104,10 +101,10 @@ class ShopController extends Controller
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $product->genre->category->id)->get();
         $category_name_en = $product->genre->category->name_en;
-        // カートを参照して、購入可能な数量を取得
-        $cc = app()->make(CartController::class);
-        $maxQuantity = $cc->itemMaxQuantity($product->id);
 
-        return view('detail', compact('product', 'genres', 'category_name_en', 'maxQuantity'));
+        // カートに追加可能な数量を取得
+        $addQtyInCart = Util::getAddQtyInCart($product->id);
+
+        return view('detail', compact('product', 'genres', 'category_name_en', 'addQtyInCart'));
     }
 }

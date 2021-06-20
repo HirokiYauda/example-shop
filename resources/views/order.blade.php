@@ -46,11 +46,11 @@
                                 {{$cart->price ? $cart->price . "円" : ""}}
                             </p>
                             @if(empty($product::find($cart->id)->stock))
-                                <p class="text-danger mb-1">この商品は、一時的に在庫切れで入荷時期は未定です。</p>
+                                <p class="text-danger mb-1">{{config("cart.no_stock_caution_message")}}</p>
                             @elseif($cart->qty > $product::find($cart->id)->stock)
                                 <p class="text-danger mb-1">
                                     残りの在庫数は、{{$product::find($cart->id)->stock}}点です。<br>
-                                    購入数量が在庫数よりも多く、入荷時期が未定の商品となります。
+                                    {{config('cart.max_qty_caution_message')}}
                                 </p>
                             @elseif($product::find($cart->id)->stock < 10)
                                 <p class="text-danger mb-1">残りの在庫数は、{{$product::find($cart->id)->stock}}点です。</p>

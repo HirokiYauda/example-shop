@@ -15,6 +15,6 @@ $('#global_search_btn').on('click', function() {
             location.href = "/" + $('#global_search_category').val();
         }
     } else {
-        $('#global_search_form').attr('action', 'search').submit();
+        $('#global_search_form').submit();
     }
 });

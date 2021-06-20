@@ -75,12 +75,12 @@ return [
         'thousand_separator' => ',',
 
     ],
-
-    'count' => [
-        'max_item' => 10, // 1商品の最大購入可能数
-        'max_cart' => 5 // 1カートの最大商品登録数
-    ],
-
-    'update_error_message' => "カートを正常に更新できませんでした。お手数ですが、トップページへ戻って、再度購入をお願いいたします"
-
+    'default_cart_count'                => 10, // カートに入れられる数
+    'default_max_qty'                   => 99, // 最大で購入可能な数量
+    'not_exist_product_in_cart_message' => 'カートに商品が存在しません。',
+    'no_stock_caution_message'          => '在庫がありません。', // 在庫なしメッセージ
+    'max_qty_caution_message'           => '購入可能な数量を超えています。', // 商品購入可能数超過メッセージ
+    'cart_count_caution_message'        => 'カートに入れられる商品数を超えています。', // カートに入れられる数量超過
+    'update_error_message'              => "カートを正常に更新できませんでした。お手数ですが、トップページへ戻って、再度購入をお願いいたします。", // カート更新失敗メッセージ
+    'display_remaining_inventory_count' => 10 // 残り在庫数を告知する数量設定
 ];

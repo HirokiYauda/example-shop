@@ -11,7 +11,7 @@ use DB;
 class MypageController extends Controller
 {
     /**
-     * User profile edit page
+     * ユーザーアカウント管理
      *
      * @return View
      */
@@ -23,7 +23,7 @@ class MypageController extends Controller
     }
 
     /**
-     * User profile Address change page
+     * 住所変更
      *
      * @return View
      */
@@ -42,7 +42,7 @@ class MypageController extends Controller
     }
 
     /**
-     * User profile full update
+     * 指定ユーザー情報を全て更新処理
      *
      * @return Redirect
      */
@@ -59,12 +59,13 @@ class MypageController extends Controller
         ]);
 
         $title = "アカウント";
+        // ユーザーテーブル更新処理
         $message = $this->update($user, $validatedData, $title);
         return redirect()->route('mypage_edit')->with('update_message', $message);
     }
 
     /**
-     * User profile address update
+     * 指定ユーザー情報の住所更新処理
      *
      * @return Redirect
      */
@@ -79,18 +80,19 @@ class MypageController extends Controller
         ]);
 
         $title = "住所";
+        // ユーザーテーブル更新処理
         $message = $this->update($user, $validatedData, $title);
         return redirect()->route('order')->with('update_message', $message);
     }
 
     /**
-     * Common Update process
+     * ユーザーテーブル更新処理
      *
      * @return String
      */
     public function update($user, $validatedData, $title)
     {
-        // ハイフンなし
+        // ハイフントル
         $validatedData['zip'] = str_replace("-", "", $validatedData['zip']);
         
         $res = DB::transaction(function () use ($validatedData, $user) {

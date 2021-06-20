@@ -7,8 +7,10 @@
     <cart-list
         :carts='@json($carts, JSON_FORCE_OBJECT)'
         :carts_info='@json($carts_info, JSON_FORCE_OBJECT)'
-        :caution_message="'{{session('caution_message') ?? ""}}'"
+        :caution_messages='@json($caution_messages, JSON_FORCE_OBJECT)'
+        :templete_messages='@json($templete_messages, JSON_FORCE_OBJECT)'
         :is_login= "{{(int)$is_login}}"
+        :max_qty="{{$max_qty}}"
     />
 </div>
 @endsection
