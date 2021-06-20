@@ -17,6 +17,9 @@ class CartController extends Controller
      */
     public function index()
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         // カートの商品情報を拡張して取得
         $carts = Util::getExpansionCartContent();
         // カートに入っている商品が購入可能かチェック
@@ -80,6 +83,9 @@ class CartController extends Controller
             'weight' => $validatedData['weight'],
             'options' => ['name_en'=> $product->name_en, 'imgpath' => $product->imgpath]
         ]);
+
+        // ユーザー情報を持っている場合は、カート情報をDBに保管
+        Util::registerCart();
 
         return redirect()->route('cart_index');
     }

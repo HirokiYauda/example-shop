@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
+use Util;
 
 class CartApi extends Controller
 {
@@ -31,6 +32,8 @@ class CartApi extends Controller
             ]);
             // カート内の選択商品を更新
             $cart = Cart::update($validatedData['row_id'], $validatedData['quantity']);
+            // ユーザー情報を持っている場合は、カート情報をDBに保管
+            Util::registerCart();
     
             // カートに入れている数量が、在庫数を超えていた場合の告知メッセージ更新
             $selectedProductInfo = Product::findOrFail($cart->id); // 選択された商品情報の取得
@@ -74,6 +77,8 @@ class CartApi extends Controller
         
             // カート内の選択商品を削除
             Cart::remove($validatedData['row_id']);
+            // ユーザー情報を持っている場合は、カート情報をDBに保管
+            Util::registerCart();
 
             // カート内の合計商品数・合計金額を更新
             $carts_info = [

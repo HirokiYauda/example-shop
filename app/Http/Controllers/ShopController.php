@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Genre;
 use Util;
+use Auth;
 
 class ShopController extends Controller
 {
@@ -17,6 +18,9 @@ class ShopController extends Controller
      */
     public function index()
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         $products = Product::with('genre.category')->Paginate(6);
         return view('top', compact('products'));
     }
@@ -28,6 +32,9 @@ class ShopController extends Controller
      */
     public function categoryNarrowingDown($category_name_en)
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
         $page_name = "「{$specified_category->name}」の商品一覧";
@@ -46,6 +53,9 @@ class ShopController extends Controller
      */
     public function genreNarrowingDown($category_name_en, $genre_name_en)
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
@@ -65,6 +75,9 @@ class ShopController extends Controller
      */
     public function search(Request $request)
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         // リクエストにカテゴリが存在するとき、指定カテゴリ取得
         $specified_category = Category::where('name_en', $request->category)->first();
         // カテゴリが存在するとき、指定ジャンル一覧を取得
@@ -96,6 +109,9 @@ class ShopController extends Controller
      */
     public function productDetail($product_name_en)
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         // EN商品名から単一商品情報を取得。存在しないときは例外エラー
         $product = Product::where('name_en', $product_name_en)->firstOrFail();
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得

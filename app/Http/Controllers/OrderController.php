@@ -20,6 +20,9 @@ class OrderController extends Controller
      */
     public function order(Product $product)
     {
+        // カート情報をDBから復元
+        Util::readCart();
+
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
@@ -81,6 +84,8 @@ class OrderController extends Controller
 
         // カートを削除
         Cart::destroy();
+        // DBからカート情報を削除
+        Cart::erase($user->id);
         return redirect()->route('order_thanks');
     }
 

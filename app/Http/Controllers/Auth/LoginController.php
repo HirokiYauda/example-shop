@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -19,7 +22,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        logout as performLogout;
+    }
 
     /**
      * Where to redirect users after login.
@@ -36,5 +41,43 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * ログイン直後の処理を追加
+     *
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // ログイン前に、カート情報を持っていた場合、DBに保存しておく
+        $carts_count = Cart::content()->count();
+        if (!empty($carts_count)) {
+            // もしカート情報を持っていたら、削除して再登録
+            Cart::erase($user->id);
+            Cart::store($user->id);
+        }
+
+        // ログイン後のリダイレクト
+        return redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * ログアウト直前の処理を追加
+     *
+     */
+    public function logout(Request $request)
+    {
+        // ログアウト前に、カート情報を持っていた場合、DBに保存しておく
+        $user = Auth::user();
+        $carts_count = Cart::content()->count();
+        if (!empty($user) && !empty($carts_count)) {
+            // もしカート情報を持っていたら、削除して再登録
+            Cart::erase($user->id);
+            Cart::store($user->id);
+        }
+
+        $this->performLogout($request);
+
+        return redirect()->route('top');
     }
 }

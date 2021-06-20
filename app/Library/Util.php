@@ -4,6 +4,7 @@ namespace App\Library;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
+use Auth;
 
 class Util
 {
@@ -108,7 +109,8 @@ class Util
         ];
 
         $carts = Cart::content();
-        if (!empty($carts)) {
+        $carts_count = $carts->count();
+        if (!empty($carts_count)) {
             foreach ($carts as $cart) {
                 $selectedProductInfo = Product::findOrFail($cart->id); // 選択された商品情報の取得
                 // 在庫なし
@@ -135,5 +137,32 @@ class Util
         }
 
         return $res;
+    }
+
+    /**
+     * カート情報をDBに保管
+     */
+    public static function registerCart()
+    {
+        // ユーザー情報を持っている場合は、カート情報をDBに保管
+        $user = Auth::user();
+        if (!empty($user)) {
+            Cart::store($user->id);
+        }
+    }
+
+    /**
+     * カート情報をDBから復元
+     */
+    public static function readCart()
+    {
+        // ユーザー情報を持っていて、カート情報を持っていない場合、DBからカート情報を取得
+        $user = Auth::user();
+        $carts_count = Cart::content()->count();
+        if (!empty($user) && empty($carts_count)) {
+            
+            
+            Cart::restore($user->id);
+        }
     }
 }
