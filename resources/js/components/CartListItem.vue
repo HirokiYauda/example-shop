@@ -26,7 +26,7 @@
                 {{ max_qty_caution_message }}
             </p>
             <p class="lead text-danger mb-1">
-                {{ cart.price ? cart.price + "円" : "" }}
+                {{ cart.price | priceLocaleString }}
             </p>
             <button type="button" @click="deleteItem" class="btn btn-light">削除</button>
         </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import util from '../filter/util';
 export default {
     data() {
         return {
@@ -41,6 +42,7 @@ export default {
             qty: this.$props.cart.qty // カート内商品の数量
         }
     },
+    mixins: [util],
     props: {
         cart: Object,
         max_qty: Number
