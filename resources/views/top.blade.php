@@ -27,6 +27,6 @@
 </div>
 
 <div class="text-center" style="width: 200px;margin: 20px auto;">
-    {{  $products->links()}}
+    {{  $products->appends(request()->input())->links()}}
 </div>
 @endsection

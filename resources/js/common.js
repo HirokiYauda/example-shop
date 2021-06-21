@@ -24,5 +24,9 @@ $('#sort').on('change', function() {
     let sort_query = $(this).val();
     url.searchParams.set("sort", sort_query);
 
+    if (url.searchParams.has('page')) {
+        url.searchParams.delete('page');
+    }
+
     location.href = url;
 });
