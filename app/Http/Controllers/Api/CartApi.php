@@ -21,7 +21,8 @@ class CartApi extends Controller
             "result" => false,
             "message" => "",
             "cart" => null,
-            "cartInfo" => ["count" => 0, "total" => 0]
+            "cartInfo" => ["count" => 0, "total" => 0],
+            "register_type" => "update"
         ];
 
         // APIリクエスト先の存在チェックや不正入力をチェック
@@ -66,7 +67,9 @@ class CartApi extends Controller
         $res = [
             "result" => false,
             "message" => "",
-            "carts_info" => null,
+            "cartInfo" => ["count" => 0, "total" => 0],
+            "register_type" => "delete",
+            "row_id" => ""
         ];
 
         // APIリクエスト先の存在チェックや不正入力をチェック
@@ -74,6 +77,7 @@ class CartApi extends Controller
             $validatedData = $request->validate([
                 'row_id' => 'required|string'
             ]);
+            $res['row_id'] = $validatedData['row_id'];
         
             // カート内の選択商品を削除
             Cart::remove($validatedData['row_id']);
@@ -81,12 +85,11 @@ class CartApi extends Controller
             Util::registerCart();
 
             // カート内の合計商品数・合計金額を更新
-            $carts_info = [
+            $res["cartInfo"] = [
                 'count' => Cart::count() ?? 0, // カート内の合計商品数
                 'total' => Cart::subtotal() ?? 0 // 合計金額(税込)
             ];
-
-            $res['carts_info'] = $carts_info;
+            
             $res['result'] = true;
         } catch (RuntimeException $e) {
             // $res['message'] = $e;

@@ -55,15 +55,7 @@ export default {
         // カート内商品が持っている購入可能フラグを一つ一つチェックして、dataのisAvailableを更新
         cart_list: {
             handler(){
-                if(this.cart_list) {
-                    for(let key in this.cart_list) {
-                        if(!this.cart_list[key].options.isAvailable) {
-                            this.isAvailable = false;
-                            return false;
-                        }
-                        this.isAvailable = true;
-                    }
-                }
+                this.checkAvailable();
             },
             deep: true
         }
@@ -82,17 +74,35 @@ export default {
             this.cautionMessages = {...this.cautionMessages, 'update_error': this.$props.templete_messages.update_error}
         },
         // API実行時のコンポーネント更新処理
-        updateCart({cart, cartInfo}) {
+        updateCart({cart, cartInfo, register_type, row_id}) {
             this.cartInfo.count = cartInfo.count;
             this.cartInfo.total = cartInfo.total;
             if (cartInfo.count === 0) {
                 this.isCart = false;
             }
 
-            if(cart.options.max_qty_caution_message) {
-                this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: false};
-            } else {
-                this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: true};
+            if (register_type === 'update') {
+                if(cart.options.max_qty_caution_message) {
+                    this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: false};
+                } else {
+                    this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: true};
+                }
+            } else if(register_type === 'delete') {
+                // 削除処理の場合、cart_list内の商品を削除後、購入可能か判定
+                delete this.cart_list[row_id];
+                this.checkAvailable();
+            }
+        },
+        checkAvailable() {
+            if(this.cart_list) {
+                for(let key in this.cart_list) {
+                    if(!this.cart_list[key].options.isAvailable) {
+                        this.isAvailable = false;
+                        return false;
+                    }
+                    
+                    this.isAvailable = true;
+                }
             }
         }
     }

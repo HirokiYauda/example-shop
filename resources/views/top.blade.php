@@ -3,7 +3,7 @@
 
 @section('content')
 <h1 class="h3 text-center mb-4">商品一覧</h1>
-@include('templete.sort_select');
+@include('templete.sort_select')
 <div class="row">
     @foreach($products as $product)
         <div class="col-sm-6 col-md-3 mb-4">
