@@ -51,7 +51,7 @@
                 <div class="col-md-7">
                     <form class="form-inline my-2 my-lg-0" action="{{route('search')}}" method="GET" id="global_search_form">
                         <div>
-                            <select id="global_search_category" name="category" class="form-control input-lg" id="exampleFormControlSelect1">
+                            <select id="global_search_category" name="category" class="form-control input-lg">
                                 <option value="">すべて</option>
                                 @foreach ($categories as $category)
                                     <option value="{{$category->name_en}}" {{($category_name_en ?? "") === $category->name_en ? 'selected' : ""}}>{{$category->name}}</option>

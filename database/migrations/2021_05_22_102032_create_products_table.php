@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('name_en', '100')->unique();
             $table->string('detail', '500');
             $table->string('search_tag', '100');
-            $table->string('price');
+            $table->integer('price');
             $table->integer('stock');
             $table->string('imgpath', '200');
             $table->timestamps();

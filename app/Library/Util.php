@@ -118,7 +118,7 @@ class Util
                     $res["result"] = false;
                     $res["not_available_messages"][] = $selectedProductInfo->name . "は、" . config("cart.no_stock_caution_message");
                 // 購入数が在庫数を超えていた場合
-                } elseif($selectedProductInfo->stock < $cart->qty) {
+                } elseif ($selectedProductInfo->stock < $cart->qty) {
                     $res["result"] = false;
                     $res["not_available_messages"][] = $selectedProductInfo->name . "は、" . config("cart.max_qty_caution_message");
                 }
@@ -164,5 +164,35 @@ class Util
         if (!empty($user) && empty($carts_count)) {
             Cart::restore($user->id);
         }
+    }
+
+    /**
+     * 指定情報でソート
+     */
+    public static function sort($query, $sort = null, $is_paginate = true)
+    {
+        if (!empty($sort)) {
+            switch ($sort) {
+                case "price_desc":
+                    $query->orderBy('price', 'desc');
+                    break;
+                case "price_asc":
+                    $query->orderBy('price', 'asc');
+                    break;
+                case "update_desc":
+                    $query->orderByRaw('updated_at desc', 'created_at desc');
+                    break;
+                case "update_asc":
+                    $query->orderByRaw('updated_at asc', 'created_at asc');
+                    break;
+                default:
+                    $query->orderByRaw('updated_at desc', 'created_at desc');
+            }
+        }
+
+        if (!empty($is_paginate)) {
+            return $query->Paginate(6);
+        }
+        return $query;
     }
 }

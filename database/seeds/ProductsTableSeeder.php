@@ -22,6 +22,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '200000',
             'stock' => 3,
             'imgpath' => 'filmcamera.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -34,6 +36,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '20000',
             'stock' => 3,
             'imgpath' => 'iyahon.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -46,6 +50,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '120000',
             'stock' => 3,
             'imgpath' => 'clock.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -58,6 +64,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '120000',
             'stock' => 3,
             'imgpath' => 'earth.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
  
@@ -71,6 +79,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '9800',
             'stock' => 3,
             'imgpath' => 'watch.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -83,6 +93,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '79800',
             'stock' => 3,
             'imgpath' => 'lens.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -95,6 +107,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '800',
             'stock' => 3,
             'imgpath' => 'shanpan.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -107,6 +121,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '200',
             'stock' => 3,
             'imgpath' => 'beer.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -119,6 +135,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '1200',
             'stock' => 3,
             'imgpath' => 'yakan.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -131,6 +149,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '11200',
             'stock' => 3,
             'imgpath' => 'kome.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -143,6 +163,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '11200',
             'stock' => 3,
             'imgpath' => 'pc.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -155,6 +177,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '25600',
             'stock' => 3,
             'imgpath' => 'aguiter.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -167,6 +191,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '15600',
             'stock' => 3,
             'imgpath' => 'eguiter.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -179,6 +205,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '3200',
             'stock' => 3,
             'imgpath' => 'steamer.jpeg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -191,6 +219,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '4200',
             'stock' => 3,
             'imgpath' => 'mouse.jpeg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
  
         DB::table('products')->insert([
@@ -203,6 +233,8 @@ class ProductsTableSeeder extends Seeder
             'price' => '84200',
             'stock' => 3,
             'imgpath' => 'mobile.jpg',
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
     }
 }

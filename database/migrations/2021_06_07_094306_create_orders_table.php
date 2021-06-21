@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('pref_id')->unsigned();
             $table->string('address1');
             $table->string('address2');
-            $table->string('total');
+            $table->integer('total');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,3 +18,11 @@ $('#global_search_btn').on('click', function() {
         $('#global_search_form').submit();
     }
 });
+
+$('#sort').on('change', function() {
+    const url = new URL(location);
+    let sort_query = $(this).val();
+    url.searchParams.set("sort", sort_query);
+
+    location.href = url;
+});

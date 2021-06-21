@@ -16,12 +16,12 @@ class ShopController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
         // カート情報をDBから復元
         Util::readCart();
 
-        $products = Product::with('genre.category')->Paginate(6);
+        $products = Util::sort(Product::with('genre.category'), $request->sort);
         return view('top', compact('products'));
     }
 
@@ -30,7 +30,7 @@ class ShopController extends Controller
      *
      * @return View
      */
-    public function categoryNarrowingDown($category_name_en)
+    public function categoryNarrowingDown(Request $request, $category_name_en)
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -41,7 +41,7 @@ class ShopController extends Controller
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
         // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込みして、商品一覧を取得
-        $products = Product::whereIn('genre_id', $genres->pluck('id'))->with('genre.category')->Paginate(6);
+        $products = Util::sort(Product::whereIn('genre_id', $genres->pluck('id'))->with('genre.category'), $request->sort);
 
         return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
@@ -51,7 +51,7 @@ class ShopController extends Controller
      *
      * @return View
      */
-    public function genreNarrowingDown($category_name_en, $genre_name_en)
+    public function genreNarrowingDown(Request $request, $category_name_en, $genre_name_en)
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -64,7 +64,8 @@ class ShopController extends Controller
         $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
         $page_name = "「{$specified_genre->name}」の商品一覧";
         // 必須パラメータのジャンルから、IDで絞り込みして、商品一覧を取得
-        $products = Product::where('genre_id', $specified_genre->id)->with('genre.category')->Paginate(6);
+        $products = Util::sort(Product::where('genre_id', $specified_genre->id)->with('genre.category'), $request->sort);
+
         return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
 
@@ -90,14 +91,14 @@ class ShopController extends Controller
         $page_name = "「{$request->free_word}」の検索結果";
 
         // リクエストから商品の条件を指定
-        $products = Product::when($genres, function ($query, $genres) {
+        $products_query = Product::when($genres, function ($query, $genres) {
             return $query->whereIn('genre_id', $genres->pluck('id'));
         })
         ->when($request->free_word, function ($query, $free_word) {
             return $query->whereRaw("match(`search_tag`) against (? IN BOOLEAN MODE)", [$free_word]);
         })
-        ->with('genre.category')
-        ->Paginate(6);
+        ->with('genre.category');
+        $products = Util::sort($products_query, $request->sort);
 
         return view('shop', compact('products', 'page_name', 'genres', 'category_name_en'));
     }
