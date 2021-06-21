@@ -147,6 +147,8 @@ class Util
         // ユーザー情報を持っている場合は、カート情報をDBに保管
         $user = Auth::user();
         if (!empty($user)) {
+            // もしカート情報を持っていたら、削除して再登録
+            Cart::erase($user->id);
             Cart::store($user->id);
         }
     }
@@ -160,8 +162,6 @@ class Util
         $user = Auth::user();
         $carts_count = Cart::content()->count();
         if (!empty($user) && empty($carts_count)) {
-            
-            
             Cart::restore($user->id);
         }
     }
