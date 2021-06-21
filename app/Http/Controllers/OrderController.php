@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -10,6 +11,7 @@ use Auth;
 use Illuminate\Support\Str;
 use DB;
 use Util;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -55,10 +57,36 @@ class OrderController extends Controller
      *
      * @return View
      */
-    public function history()
+    public function history(Request $request)
     {
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->get();
+        $orderYears = collect();
+
+        if (!empty($orders)) {
+            // 注文履歴の作成日から、重複しない年を降順で取得
+            $orderYears = $orders->pluck('created_at')
+                ->mapInto(Carbon::class)
+                ->map(function ($item, $key) {
+                    return $item->format('Y');
+                })
+                ->unique()
+                ->sort(function ($a, $b) {
+                    if ($a == $b) {
+                        return 0;
+                    }
+                    return ($a > $b) ? -1 : 1;
+                });
+
+            // 注文履歴を、年で絞り込んで取得
+            $sort_history = $orderYears->max(); // リクエストがないときは、直近の年を取得
+            if (!empty($request->sort_history)) {
+                $sort_history = $request->sort_history;
+            }
+            $orders = Order::where('user_id', $user->id)->whereYear('created_at', $sort_history)->get();
+        }
         
-        return view('history');
+        return view('order.history', compact('orders', 'orderYears'));
     }
 
     /**

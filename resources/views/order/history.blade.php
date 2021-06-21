@@ -3,46 +3,70 @@
 
 @section('content')
 <h1 class="h3 text-center mb-4">注文履歴</h1>
-<div class="row">
-    {{-- @foreach($products as $product)
-        <div class="col-sm-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <a href="{{route('product_detail', ['product'=> $product->name_en, 'category_id' => $product->genre->category->id, 'genre_id' => $product->genre->id])}}">
-                    <img class="bd-placeholder-img card-img-top obj-fit" src="/images/{{$product->imgpath}}" alt="">
-                </a>
-                <div class="card-body px-2 py-3">
-                    <h5>
-                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en, 'category_id' => $product->genre->category->id, 'genre_id' => $product->genre->id])}}">
-                            {{$product->name}}
-                        </a>
-                    </h5>
-                    <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('category_narrowing_down', ['category' => $product->genre->category->name_en])}}">{{$product->genre->category->name}}</a>
-                    <p class="lead text-danger mb-1">{{number_format($product->price) . "円" ?? ""}}</p>
-                    <p class="card-text"><small>{{$product->detail}}</small></p>
-                </div>
-                <div class="card-footer bg-white border-white text-center mb-2">
-                    @if(Util::getAddQtyInCart($product->id) > 0)
-                        <form action="{{ route('add_cart') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
-                        </form>
-                    @else
-                        <p class="text-danger mb-1">
-                            @if(empty($product->stock))
-                                {{config('cart.no_stock_caution_message')}}
-                            @else
-                                {{config('cart.max_qty_caution_message')}}
-                            @endif
-                        </p>
-                    @endif
-                </div>
-            </div>
+@if(!$orderYears->isEmpty())
+    <div class="row">
+        <div class="col-2 clearfix mb-3 pr-0">
+                <select id="sort_history" name="sort_history" class="form-control">
+                    @foreach($orderYears as $orderYear)
+                        <option value="{{$orderYear}}" {{$orderYear === request('sort_history', "") ? 'selected' : ""}}>{{$orderYear}}</option>
+                    @endforeach
+                </select>
         </div>
-    @endforeach --}}
-</div>
+        <div class="col-10 pt-1">に注文された<strong class="lead">{{$orders->count()}}</strong>件を表示</div>
+    </div>
+@endif
 
-<div class="text-center" style="width: 200px;margin: 20px auto;">
-    {{  $products->appends(request()->input())->links()}}
+<div>
+    @if(!$orders->isEmpty())
+        @foreach($orders as $order)
+            <div class="bg-white px-2 py-3 mb-4 border">
+                <div class="bg-light">
+                    <div class="row px-3 pt-3 mb-2">
+                        <dl class="col-2">
+                            <dt>注文日</dt>
+                            <dd>{{\Carbon\Carbon::parse($order->created_at)->format('Y年m月d日')}}</dd>
+                        </dl>
+                        <dl class="col-2">
+                            <dt>合計金額</dt>
+                            <dd>{{number_format($order->total) . "円" ?? ""}}</dd>
+                        </dl>
+                        <dl class="col-5">
+                            <dt>お届け先</dt>
+                            <dd>{{$order->full_address}}</dd>
+                        </dl>
+                        <dl class="col-3">
+                            <dt>注文番号</dt>
+                            <dd>{{$order->order_number}}</dd>
+                        </dl>
+                    </div>
+                </div>
+                
+                @foreach ($order->orderDetail as $orderDetail)
+                    <div class="row justify-content-between bg-white mx-2 py-3 my-3 mb-3 border-bottom">
+                        <div class="col-lg-2 bg-white px-2">
+                            <a href="{{route('product_detail', ['product' => $orderDetail->product->name_en])}}">
+                                <img
+                                    class="obj-fit"
+                                    src="/images/{{$orderDetail->product->imgpath}}"
+                                    alt=""
+                                />
+                            </a>
+                        </div>
+                        <div class="col-lg-10 bg-white px-2">
+                            <p class="mb-1">{{ $orderDetail->product->name }}</p>
+                            <p class="lead text-danger mb-2">
+                                {{number_format($orderDetail->price_including_tax) . "円" ?? ""}}
+                            </p>
+                            <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('product_detail', ['product' => $orderDetail->product->name_en])}}">
+                                再度購入する
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
+    @else
+        <p class="text-center">注文履歴がありません</p>
+    @endif
 </div>
 @endsection

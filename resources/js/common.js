@@ -30,3 +30,11 @@ $('#sort').on('change', function() {
 
     location.href = url;
 });
+
+$('#sort_history').on('change', function() {
+    const url = new URL(location);
+    let sort_query = $(this).val();
+    url.searchParams.set("sort_history", sort_query);
+
+    location.href = url;
+});

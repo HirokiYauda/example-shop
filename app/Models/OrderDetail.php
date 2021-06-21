@@ -15,4 +15,13 @@ class OrderDetail extends Model
         'order_id', 'product_id', 'price_including_tax', 'qty'
     ];
 
+    /**
+     * Product relation
+     *
+     * @return relationMethod
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
