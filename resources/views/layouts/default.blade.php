@@ -35,6 +35,7 @@
                             <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
                         @else
                             <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
+                            <a class="dropdown-item" href="{{ route('order_history') }}">注文履歴</a>
                             <a class="dropdown-item" href="{{ route('mypage_edit') }}">アカウント管理</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -90,6 +91,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('cart_index') }}">カートを見る</a>
                             <a class="dropdown-item" href="{{ route('mypage_edit') }}">アカウント管理</a>
+                            <a class="dropdown-item" href="{{ route('order_history') }}">注文履歴</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('ログアウト') }}

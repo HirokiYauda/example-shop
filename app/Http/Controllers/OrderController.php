@@ -51,16 +51,28 @@ class OrderController extends Controller
     }
 
     /**
+     * 注文履歴
+     *
+     * @return View
+     */
+    public function history()
+    {
+        
+        return view('history');
+    }
+
+    /**
      * 商品購入
      *
      * @return Redirect
      */
-    public function purchase(Order $order, OrderDetail $orderDetail, Product $product)
+    public function purchase(Order $order, Product $product)
     {
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
             'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
+            'registration_total' => Cart::subtotal(0, "", "") ?? 0
         ];
         // カートに商品が存在しない場合は、トップへリダイレクト
         if ($carts_info["count"] <= 0) {
@@ -80,7 +92,7 @@ class OrderController extends Controller
         }
 
         // 商品購入時のDB更新処理
-        $this->updateOrder($carts, $carts_info, $user, $order, $orderDetail, $product);
+        $this->updateOrder($carts, $carts_info, $user, $order, $product);
 
         // カートを削除
         Cart::destroy();
@@ -104,9 +116,9 @@ class OrderController extends Controller
      *
      * @return Boolean
      */
-    public function updateOrder($carts, $carts_info, $user, $order, $orderDetail, $product)
+    public function updateOrder($carts, $carts_info, $user, $order, $product)
     {
-        DB::transaction(function () use ($carts, $carts_info, $user, $order, $orderDetail, $product) {
+        DB::transaction(function () use ($carts, $carts_info, $user, $order, $product) {
             // 注文テーブルへ登録
             $order_data = [
                 'user_id' => $user->id,
@@ -114,7 +126,7 @@ class OrderController extends Controller
                 'pref_id' => $user->pref_id,
                 'address1' => $user->address1,
                 'address2' => $user->address2,
-                'total' => $carts_info['total'],
+                'total' => $carts_info['registration_total'],
             ];
             $order->fill($order_data)->save();
             $orderLastInsertID = $order->id;
@@ -132,7 +144,9 @@ class OrderController extends Controller
                     'qty' => $cart->qty,
                 ];
                 // 注文詳細テーブルへ登録
+                $orderDetail = new OrderDetail;
                 $orderDetail->fill($order_detail_data)->save();
+                
                 // 商品テーブルの在庫数を減算
                 $selectProduct = $product->findOrFail($cart->id);
                 $subtraction_number = ($selectProduct->stock >= $cart->qty) ? ($selectProduct->stock - $cart->qty) : 0;
