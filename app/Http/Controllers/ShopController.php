@@ -6,17 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Genre;
-use Util;
-use Auth;
+use App\Library\Util;
 
 class ShopController extends Controller
 {
     /**
      * トップ
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -28,9 +29,12 @@ class ShopController extends Controller
     /**
      * 商品一覧(カテゴリ絞り込み)
      *
+     * @param \Illuminate\Http\Request $request
+     * @param string $category_name_en query parameter
+     * 
      * @return View
      */
-    public function categoryNarrowingDown(Request $request, $category_name_en)
+    public function categoryNarrowingDown(Request $request, string $category_name_en): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -49,9 +53,13 @@ class ShopController extends Controller
     /**
      * 商品一覧(ジャンル絞り込み)
      *
+     * @param \Illuminate\Http\Request $request
+     * @param string $category_name_en query parameter
+     * @param string $genre_name_en query parameter
+     * 
      * @return View
      */
-    public function genreNarrowingDown(Request $request, $category_name_en, $genre_name_en)
+    public function genreNarrowingDown(Request $request, string $category_name_en, string $genre_name_en): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -72,9 +80,11 @@ class ShopController extends Controller
     /**
      * 商品一覧(検索結果)
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return View
      */
-    public function search(Request $request)
+    public function search(Request $request): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -106,9 +116,11 @@ class ShopController extends Controller
     /**
      * 商品詳細
      *
+     * @param string $product_name_en query parameter
+     * 
      * @return View
      */
-    public function productDetail($product_name_en)
+    public function productDetail(string $product_name_en): object
     {
         // カート情報をDBから復元
         Util::readCart();

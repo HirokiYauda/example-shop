@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Auth;
-use Util;
+use Illuminate\Support\Facades\Auth;
+use App\Library\Util;
 
 class CartController extends Controller
 {
@@ -15,7 +15,7 @@ class CartController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -47,13 +47,14 @@ class CartController extends Controller
         return view('cart', compact('carts', 'carts_info', 'is_login', 'max_qty', 'caution_messages', 'templete_messages'));
     }
 
-
     /**
      * カート追加処理
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return Redirect
      */
-    public function addCart(Request $request)
+    public function addCart(Request $request): object
     {
         $validatedData = $request->validate([
             'product_id' => ['required', 'integer'],

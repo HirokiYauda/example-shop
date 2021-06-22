@@ -7,10 +7,10 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use DB;
-use Util;
+use Illuminate\Support\Facades\DB;
+use App\Library\Util;
 use Carbon\Carbon;
 
 class OrderController extends Controller
@@ -18,9 +18,11 @@ class OrderController extends Controller
     /**
      * 注文確認
      *
+     * @param \App\Models\Product $product
+     * 
      * @return View
      */
-    public function order(Product $product)
+    public function order(Product $product): object
     {
         // カート情報をDBから復元
         Util::readCart();
@@ -55,9 +57,11 @@ class OrderController extends Controller
     /**
      * 注文履歴
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return View
      */
-    public function history(Request $request)
+    public function history(Request $request): object
     {
         $user = Auth::user();
         $orders = Order::where('user_id', $user->id)->get();
@@ -92,9 +96,12 @@ class OrderController extends Controller
     /**
      * 商品購入
      *
+     * @param \App\Models\Order $order
+     * @param \App\Models\Product $product
+     * 
      * @return Redirect
      */
-    public function purchase(Order $order, Product $product)
+    public function purchase(Order $order, Product $product): object
     {
         $carts = Cart::content();
         $carts_info = [
@@ -120,7 +127,7 @@ class OrderController extends Controller
         }
 
         // 商品購入時のDB更新処理
-        $this->_updateOrder($carts, $carts_info, $user, $order, $product);
+        $this->updateOrder($carts, $carts_info, $user, $order, $product);
 
         // カートを削除
         Cart::destroy();
@@ -142,9 +149,15 @@ class OrderController extends Controller
     /**
      * 商品購入時のDB更新処理
      *
-     * @return Boolean
+     * @param \Gloudemans\Shoppingcart\Facades\Cart::content $carts
+     * @param array $carts_info
+     * @param \Illuminate\Support\Facades\Auth::user $user
+     * @param \App\Models\Order $order
+     * @param \App\Models\Product $product
+     * 
+     * @return void
      */
-    private function _updateOrder($carts, $carts_info, $user, $order, $product)
+    private function updateOrder(object $carts, array $carts_info, object $user, object $order, object $product): void
     {
         DB::transaction(function () use ($carts, $carts_info, $user, $order, $product) {
             // 注文テーブルへ登録

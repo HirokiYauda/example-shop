@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
-use Util;
+use App\Library\Util;
+use RuntimeException;
 
 class CartApi extends Controller
 {
     /**
      * カート内商品の数量更新API
      *
-     * @return Object
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return array
      */
-    public function quantityUpdate(Request $request)
+    public function quantityUpdate(Request $request): array
     {
         $res = [
             "result" => false,
@@ -60,9 +63,11 @@ class CartApi extends Controller
     /**
      * カート内商品削除API
      *
-     * @return Object
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return array
      */
-    public function deleteItem(Request $request)
+    public function deleteItem(Request $request): array
     {
         $res = [
             "result" => false,

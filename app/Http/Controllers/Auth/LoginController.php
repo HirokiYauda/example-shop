@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -46,6 +46,10 @@ class LoginController extends Controller
     /**
      * ログイン直後の処理を追加
      *
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $user
+     * 
+     * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
@@ -63,7 +67,10 @@ class LoginController extends Controller
 
     /**
      * ログアウト直前の処理を追加
-     *
+     * 
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {
