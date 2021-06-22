@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Thanks extends Mailable
+class ThanksMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,7 @@ class Thanks extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.thanks', $this->mail_data)->subject('Larashopでのご購入ありがとうございます');
+        $subject = "ExampleShopでのご注文(" . $this->mail_data['count'] . "点)";
+        return $this->view('mails.thanks', ['mail_data' => $this->mail_data])->subject($subject);
     }
 }

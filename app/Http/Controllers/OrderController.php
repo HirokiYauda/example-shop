@@ -10,8 +10,12 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ThanksMail;
+use App\Mail\OrderMail;
 use App\Library\Util;
 use Carbon\Carbon;
+
 
 class OrderController extends Controller
 {
@@ -127,8 +131,21 @@ class OrderController extends Controller
         }
 
         // 商品購入時のDB更新処理
-        $this->updateOrder($carts, $carts_info, $user, $order, $product);
+        $order_number = $this->updateOrder($carts, $carts_info, $user, $order, $product);
 
+        // メールデータ作成
+        $mail_data = [
+            'user_name' => $user->name,
+            'order_number' => $order_number,
+            'full_address' => $user->full_address,
+            'total' => $carts_info['total'],
+            'count' => $carts_info['count']
+        ];
+        // ユーザーへメール送信
+        Mail::to($user->email)->send(new ThanksMail($mail_data));
+        // 商品管理者へメール送信
+        Mail::to('pixy.gtr@gamil.com')->send(new OrderMail($mail_data));
+        
         // カートを削除
         Cart::destroy();
         // DBからカート情報を削除
@@ -155,11 +172,11 @@ class OrderController extends Controller
      * @param \App\Models\Order $order
      * @param \App\Models\Product $product
      * 
-     * @return void
+     * @return string
      */
-    private function updateOrder(object $carts, array $carts_info, object $user, object $order, object $product): void
+    private function updateOrder(object $carts, array $carts_info, object $user, object $order, object $product): string
     {
-        DB::transaction(function () use ($carts, $carts_info, $user, $order, $product) {
+        return DB::transaction(function () use ($carts, $carts_info, $user, $order, $product) {
             // 注文テーブルへ登録
             $order_data = [
                 'user_id' => $user->id,
@@ -193,6 +210,8 @@ class OrderController extends Controller
                 $subtraction_number = ($selectProduct->stock >= $cart->qty) ? ($selectProduct->stock - $cart->qty) : 0;
                 $selectProduct->fill(['stock' => $subtraction_number])->save();
             }
+
+            return $order_number;
         });
     }
 }
