@@ -75,7 +75,7 @@ class MypageController extends Controller
 
         $title = "住所";
         // ユーザーテーブル更新処理
-        $message = $this->update($user, $validatedData, $title);
+        $message = $this->_update($user, $validatedData, $title);
         return redirect()->route('order')->with('update_message', $message);
     }
 
@@ -84,7 +84,7 @@ class MypageController extends Controller
      *
      * @return String
      */
-    public function update($user, $validatedData, $title)
+    private function _update($user, $validatedData, $title)
     {
         // ハイフントル
         $validatedData['zip'] = str_replace("-", "", $validatedData['zip']);

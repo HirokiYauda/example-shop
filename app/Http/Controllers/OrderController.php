@@ -120,7 +120,7 @@ class OrderController extends Controller
         }
 
         // 商品購入時のDB更新処理
-        $this->updateOrder($carts, $carts_info, $user, $order, $product);
+        $this->_updateOrder($carts, $carts_info, $user, $order, $product);
 
         // カートを削除
         Cart::destroy();
@@ -144,7 +144,7 @@ class OrderController extends Controller
      *
      * @return Boolean
      */
-    public function updateOrder($carts, $carts_info, $user, $order, $product)
+    private function _updateOrder($carts, $carts_info, $user, $order, $product)
     {
         DB::transaction(function () use ($carts, $carts_info, $user, $order, $product) {
             // 注文テーブルへ登録
