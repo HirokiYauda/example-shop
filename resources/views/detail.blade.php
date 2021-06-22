@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-lg-8 bg-white px-2">
                     <h2>{{ $product->name }}</h2>
-                    <p class="lead text-danger mb-1">{{number_format($product->price) . "円" ?? ""}}</p>
+                    <p class="lead text-danger mb-1">{{number_format($product->price_including_tax) . "円" ?? ""}}</p>
                     @if(empty($product->stock))
                         <p class="text-danger mb-1">{{config("cart.no_stock_caution_message")}}</p>
                     @endif
@@ -23,7 +23,7 @@
         </div>
         {{-- サイドカラム --}}
         <div class="side col-lg-3 bg-white p-4">
-            <p class="lead text-danger mb-2">{{number_format($product->price) . "円" ?? ""}}</p>
+            <p class="lead text-danger mb-2">{{number_format($product->price_including_tax) . "円" ?? ""}}</p>
             @if(!empty($product->stock) && $addQtyInCart > 0)
                 <form action="{{ route('add_cart') }}" method="post">
                     @csrf

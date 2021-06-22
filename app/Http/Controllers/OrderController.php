@@ -28,7 +28,7 @@ class OrderController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
+            'total' => Cart::total() ?? 0, // 合計金額(税込)
         ];
 
         // カートに商品が存在しない場合は、トップへリダイレクト
@@ -99,8 +99,8 @@ class OrderController extends Controller
         $carts = Cart::content();
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
-            'registration_total' => Cart::subtotal(0, "", "") ?? 0
+            'total' => Cart::total() ?? 0, // 合計金額(税込)
+            'registration_total' => Cart::total(0, "", "") ?? 0
         ];
         // カートに商品が存在しない場合は、トップへリダイレクト
         if ($carts_info["count"] <= 0) {
@@ -168,7 +168,7 @@ class OrderController extends Controller
                 $order_detail_data = [
                     'order_id' => $orderLastInsertID,
                     'product_id' => $cart->id,
-                    'price_including_tax' => $cart->price,
+                    'price_including_tax' => $cart->options->price_including_tax,
                     'qty' => $cart->qty,
                 ];
                 // 注文詳細テーブルへ登録

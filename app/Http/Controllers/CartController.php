@@ -39,7 +39,7 @@ class CartController extends Controller
 
         $carts_info = [
             'count' => Cart::count() ?? 0, // カート内の合計商品数
-            'total' => Cart::subtotal() ?? 0, // 合計金額(税込)
+            'total' => Cart::total() ?? 0, // 合計金額(税込)
             'is_available' => $isAvailable
         ];
         $is_login = Auth::check();
@@ -81,7 +81,7 @@ class CartController extends Controller
             'qty' => $validatedData['qty'],
             'price' => $product->price,
             'weight' => $validatedData['weight'],
-            'options' => ['name_en'=> $product->name_en, 'imgpath' => $product->imgpath]
+            'options' => ['name_en'=> $product->name_en, 'imgpath' => $product->imgpath, 'price_including_tax' => $product->price_including_tax]
         ]);
 
         // ユーザー情報を持っている場合は、カート情報をDBに保管

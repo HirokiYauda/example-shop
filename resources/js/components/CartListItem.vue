@@ -26,7 +26,7 @@
                 {{ max_qty_caution_message }}
             </p>
             <p class="lead text-danger mb-1">
-                {{ cart.price | priceLocaleString }}
+                {{ cart.options.price_including_tax | priceLocaleString }}
             </p>
             <button type="button" @click="deleteItem" class="btn btn-light">削除</button>
         </div>

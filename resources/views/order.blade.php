@@ -43,7 +43,7 @@
                             <h2>{{$cart->name}}</h2>
                             <p>数量: {{$cart->qty}}</p>
                             <p class="lead text-danger mb-1">
-                                {{$cart->price ? $cart->price . "円" : ""}}
+                                {{$cart->options->price_including_tax ? $cart->options->price_including_tax . "円" : ""}}
                             </p>
                             @if(empty($product::find($cart->id)->stock))
                                 <p class="text-danger mb-1">{{config("cart.no_stock_caution_message")}}</p>

@@ -18,7 +18,7 @@
                         </a>
                     </h5>
                     <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('category_narrowing_down', ['category' => $product->genre->category->name_en])}}">{{$product->genre->category->name}}</a>
-                    <p class="lead text-danger mb-1">{{number_format($product->price) . "円" ?? ""}}</p>
+                    <p class="lead text-danger mb-1">{{number_format($product->price_including_tax) . "円" ?? ""}}</p>
                     <p class="card-text"><small>{{$product->detail}}</small></p>
                 </div>
             </div>

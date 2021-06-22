@@ -47,7 +47,7 @@ class CartApi extends Controller
             // カート内の合計商品数・合計金額を更新
             $res["cartInfo"] = [
                 'count' => Cart::count() ?? 0, // カート内の合計商品数
-                'total' => Cart::subtotal() ?? 0 // 合計金額(税込)
+                'total' => Cart::total() ?? 0 // 合計金額(税込)
             ];
             $res["result"] = true;
         } catch (RuntimeException $e) {
@@ -87,7 +87,7 @@ class CartApi extends Controller
             // カート内の合計商品数・合計金額を更新
             $res["cartInfo"] = [
                 'count' => Cart::count() ?? 0, // カート内の合計商品数
-                'total' => Cart::subtotal() ?? 0 // 合計金額(税込)
+                'total' => Cart::total() ?? 0 // 合計金額(税込)
             ];
             
             $res['result'] = true;

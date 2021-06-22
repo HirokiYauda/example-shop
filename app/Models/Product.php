@@ -26,11 +26,10 @@ class Product extends Model
     /**
      * 商品金額を税込みにして取得
      *
-     * @param  int  $price
      * @return int
      */
-    public function getPriceAttribute($price)
+    public function getPriceIncludingTaxAttribute()
     {
-        return $price + ($price * (config("cart.tax") / 100));
+        return $this->price + ($this->price * (config("cart.tax") / 100));
     }
 }
