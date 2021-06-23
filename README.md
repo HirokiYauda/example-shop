@@ -14,6 +14,19 @@
 - npm run dev
 - ※ .envファイルの設定が必要
 
+## memcachedへ保存されているか確認
+```
+セッションにテストデータを格納して、データに含まれているか確認
+
+# memcachedサーバーへアクセス
+telnet localhost 11211
+# slab-id 確認
+stats items
+# key value 確認
+stats cachedump 7 1
+# データの取得
+get exapmle_shop_cache:pg9erfnsxnhcbhGIGKIVSZC2Oopb7yvGAKZmN7K8
+```
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 

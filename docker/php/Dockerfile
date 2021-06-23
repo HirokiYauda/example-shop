@@ -6,7 +6,11 @@ RUN apt-get update \
 git \
 zip \
 unzip \
-vim
+vim \
+libmemcached-dev \
+libzip-dev \
+&& pecl install memcached \
+&& docker-php-ext-enable memcached
 RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo_mysql pdo_pgsql
