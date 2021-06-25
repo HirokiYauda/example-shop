@@ -29,6 +29,18 @@ services:
     volumes:
       - ./docker/db/mysql:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+  mysql-testing:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: example_shop
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./docker/db/testing/mysql:/var/lib/mysql
+      - ./docker/db/testing/my.cnf:/etc/mysql/conf.d/my.cnf
   cache:
     image: memcached
     container_name: project_cache

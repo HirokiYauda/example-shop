@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('genre_id');
             $table->string('name', '100');
             $table->string('name_en', '100')->unique();
-            $table->string('detail', '500');
+            $table->text('detail');
             $table->string('search_tag', '100');
             $table->integer('price');
             $table->integer('stock');

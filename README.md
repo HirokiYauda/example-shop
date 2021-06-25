@@ -28,6 +28,34 @@ stats cachedump 7 1
 get exapmle_shop_cache:pg9erfnsxnhcbhGIGKIVSZC2Oopb7yvGAKZmN7K8
 ```
 
+## テストについて
+```
+# テスト実行方法
+## 開発環境のenvを使用しないように、設定キャッシュをクリア。
+php artisan config:clear
+
+## PHPUnitで、テスト実行(一例)
+./vendor/bin/phpunit
+./vendor/bin/phpunit tests/Feature/ShopControllerActionTest.php
+
+## 補足: artisanで、testingデータベースを操作するとき
+php artisan migrate:fresh --env=testing
+
+# テスト ファイル生成
+## Featureディレクトリにテストを生成する
+php artisan make:test UserTest
+## Unitディレクトリにテストを生成する
+php artisan make:test UserTest --unit
+
+# ファクトリー ファイル生成
+
+# ファクトリー実行
+## モデル生成
+factory(Product::class)->make();
+## モデル生成&DBへ保存
+factory(Product::class)->create();
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
