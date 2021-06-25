@@ -48,6 +48,7 @@ php artisan make:test UserTest
 php artisan make:test UserTest --unit
 
 # ファクトリー ファイル生成
+php artisan make:factory ProductsFactory --model=Product
 
 # ファクトリー実行
 ## モデル生成
