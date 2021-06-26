@@ -14,11 +14,11 @@ class CreateOrderDetailsTable extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('order_id')->index();
-            $table->bigInteger('product_id')->index();
-            $table->integer('price_including_tax');
-            $table->integer('qty');
+            $table->bigIncrements('id')->comment('注文詳細ID');
+            $table->bigInteger('order_id')->index()->comment('注文ID');;
+            $table->bigInteger('product_id')->index()->comment('商品ID');
+            $table->integer('price_including_tax')->comment('税込金額');
+            $table->integer('qty')->comment('商品数量');
             $table->timestamps();
         });
     }

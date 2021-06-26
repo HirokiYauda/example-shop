@@ -14,16 +14,16 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('admin_id')->index();
-            $table->bigInteger('genre_id')->index();
-            $table->string('name', '100');
-            $table->string('name_en', '100')->unique();
-            $table->text('detail');
-            $table->string('search_tag', '100')->index();
-            $table->integer('price');
-            $table->integer('stock');
-            $table->string('imgpath', '200');
+            $table->bigIncrements('id')->comment('商品ID');
+            $table->bigInteger('admin_id')->index()->comment('管理者ID');
+            $table->bigInteger('genre_id')->index()->comment('ジャンルID');
+            $table->string('name', '100')->comment('商品名');
+            $table->string('name_en', '100')->unique()->comment('商品名(EN)');
+            $table->text('detail')->comment('詳細メッセージ');
+            $table->string('search_tag', '100')->index()->comment('検索用タグ');
+            $table->integer('price')->comment('価格');
+            $table->integer('stock')->comment('在庫数');
+            $table->string('imgpath', '200')->comment('画像パス');
             $table->timestamps();
             $table->softDeletes();
         });

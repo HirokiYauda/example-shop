@@ -14,16 +14,16 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('zip', 10)->nullable();
-            $table->tinyInteger('pref_id')->unsigned()->nullable()->index();
-            $table->string('address1')->nullable();
-            $table->string('address2')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->bigIncrements('id')->comment('ユーザーID');
+            $table->string('name')->comment('ユーザー名');
+            $table->string('email')->unique()->comment('メールアドレス');
+            $table->string('zip', 10)->nullable()->comment('郵便番号');
+            $table->tinyInteger('pref_id')->unsigned()->nullable()->index()->comment('都道府県ID');
+            $table->string('address1')->nullable()->comment('住所1');
+            $table->string('address2')->nullable()->comment('住所2');
+            $table->timestamp('email_verified_at')->nullable()->comment('メール確認');
+            $table->string('password')->comment('パスワード');
+            $table->rememberToken()->comment('トークン');
             $table->timestamps();
             $table->softDeletes();
         });

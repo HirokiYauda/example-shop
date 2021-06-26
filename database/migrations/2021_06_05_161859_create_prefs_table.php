@@ -14,8 +14,8 @@ class CreatePrefsTable extends Migration
     public function up()
     {
         Schema::create('prefs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', '20');
+            $table->bigIncrements('id')->comment('都道府県ID');
+            $table->string('name', '20')->comment('都道府県名');
         });
     }
 

@@ -14,10 +14,10 @@ class CreateGenresTable extends Migration
     public function up()
     {
         Schema::create('genres', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('category_id')->index();
-            $table->string('name', '100');
-            $table->string('name_en', '100')->unique();
+            $table->bigIncrements('id')->comment('ジャンルID');
+            $table->bigInteger('category_id')->index()->comment('カテゴリID');
+            $table->string('name', '100')->comment('カテゴリ名');
+            $table->string('name_en', '100')->unique()->comment('カテゴリ名(EN)');
             $table->timestamps();
             $table->softDeletes();
         });
