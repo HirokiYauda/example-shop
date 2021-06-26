@@ -1,0 +1,379 @@
+﻿# A5:ER FORMAT:14
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  https://a5m2.mmatsubara.com
+
+[Manager]
+ProjectName=
+Author=
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",7,"A3Landscape",$FFFFFF
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=7
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=5
+RDBMSTypeName=MySQL
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+UpperCaseKeyword=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Entity]
+PName=categories
+LName=categories
+Comment=
+TableOption=
+Page=MAIN
+Left=300
+Top=850
+Field="カテゴリID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="カテゴリ名","name","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カテゴリ名(EN)","name_en","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="deleted_at","deleted_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=categories_name_en_unique=2,name_en
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",300,850
+ZOrder=-1
+
+[Entity]
+PName=genres
+LName=genres
+Comment=
+TableOption=
+Page=MAIN
+Left=1000
+Top=1200
+Field="ジャンルID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="カテゴリID","category_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カテゴリ名","name","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="カテゴリ名(EN)","name_en","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="deleted_at","deleted_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=genres_name_en_unique=2,name_en
+Index=genres_category_id_index=0,category_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1000,1200
+ZOrder=-3
+
+[Entity]
+PName=order_details
+LName=order_details
+Comment=
+TableOption=
+Page=MAIN
+Left=2500
+Top=1850
+Field="注文詳細ID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="注文ID","order_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="商品ID","product_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="税込金額","price_including_tax","int(11)","NOT NULL",,"","",$FFFFFFFF,""
+Field="商品数量","qty","int(11)","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=order_details_order_id_index=0,order_id
+Index=order_details_product_id_index=0,product_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",2500,1850
+ZOrder=-5
+
+[Entity]
+PName=orders
+LName=orders
+Comment=
+TableOption=
+Page=MAIN
+Left=3300
+Top=1550
+Field="注文ID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ユーザーID","user_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="注文番号","order_number","varchar(50)",,,"","",$FFFFFFFF,""
+Field="郵便番号","zip","varchar(10)","NOT NULL",,"","",$FFFFFFFF,""
+Field="都道府県ID","pref_id","tinyint(3) unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="住所1","address1","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="住所2","address2","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="合計金額","total","int(11)","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="deleted_at","deleted_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=orders_order_number_unique=2,order_number
+Index=orders_user_id_index=0,user_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",3300,1550
+ZOrder=-6
+
+[Entity]
+PName=password_resets
+LName=password_resets
+Comment=
+TableOption=
+Page=MAIN
+Left=300
+Top=1450
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="トークン","token","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="作成日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=password_resets_email_index=0,email
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",300,1450
+ZOrder=-7
+
+[Entity]
+PName=prefs
+LName=prefs
+Comment=
+TableOption=
+Page=MAIN
+Left=1100
+Top=850
+Field="都道府県ID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="都道府県名","name","varchar(20)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1100,850
+ZOrder=-8
+
+[Entity]
+PName=products
+LName=products
+Comment=
+TableOption=
+Page=MAIN
+Left=1700
+Top=1550
+Field="商品ID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="管理者ID","admin_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ジャンルID","genre_id","bigint(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="商品名","name","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="商品名(EN)","name_en","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="詳細メッセージ","detail","text","NOT NULL",,"","",$FFFFFFFF,""
+Field="検索用タグ","search_tag","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="価格","price","int(11)","NOT NULL",,"","",$FFFFFFFF,""
+Field="在庫数","stock","int(11)","NOT NULL",,"","",$FFFFFFFF,""
+Field="画像パス","imgpath","varchar(200)","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="deleted_at","deleted_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=products_name_en_unique=2,name_en
+Index=products_admin_id_index=0,admin_id
+Index=products_genre_id_index=0,genre_id
+Index=products_search_tag_index=0,search_tag
+Index=search_tag=0,search_tag
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1700,1550
+ZOrder=-9
+
+[Entity]
+PName=shoppingcart
+LName=shoppingcart
+Comment=
+TableOption=
+Page=MAIN
+Left=300
+Top=1200
+Field="識別子","identifier","varchar(255)","NOT NULL",0,"","",$FFFFFFFF,""
+Field="インスタンス","instance","varchar(255)","NOT NULL",1,"","",$FFFFFFFF,""
+Field="コンテンツ","content","longtext","NOT NULL",,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",300,1200
+ZOrder=-10
+
+[Entity]
+PName=users
+LName=users
+Comment=
+TableOption=
+Page=MAIN
+Left=2650
+Top=850
+Field="ユーザーID","id","bigint(20) unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ユーザー名","name","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="郵便番号","zip","varchar(10)",,,"","",$FFFFFFFF,""
+Field="都道府県ID","pref_id","tinyint(3) unsigned",,,"","",$FFFFFFFF,""
+Field="住所1","address1","varchar(255)",,,"","",$FFFFFFFF,""
+Field="住所2","address2","varchar(255)",,,"","",$FFFFFFFF,""
+Field="メール確認","email_verified_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="パスワード","password","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="トークン","remember_token","varchar(100)",,,"","",$FFFFFFFF,""
+Field="created_at","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="updated_at","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="deleted_at","deleted_at","timestamp",,,"null","",$FFFFFFFF,""
+Index=users_email_unique=2,email
+Index=users_pref_id_index=0,pref_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",2650,850,647,331
+ZOrder=-11
+
+[Relation]
+Entity1=prefs
+Entity2=orders
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=pref_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,3178,5479,4130,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627010733
+LineMode=0
+Bar1=318
+Bar2=548
+Bar3=413
+TermPos1=R
+TermPos2=R
+ZOrder=3
+
+[Relation]
+Entity1=prefs
+Entity2=users
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=pref_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,3089,5955,3463,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627010833
+LineMode=0
+Bar1=309
+Bar2=596
+Bar3=346
+TermPos1=R
+TermPos2=R
+ZOrder=5
+
+[Relation]
+Entity1=orders
+Entity2=order_details
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=order_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,588,5067,2105,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627010818
+LineMode=0
+Bar1=59
+Bar2=507
+Bar3=210
+TermPos1=R
+TermPos2=R
+ZOrder=6
+
+[Relation]
+Entity1=categories
+Entity2=genres
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=category_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,955,9006,2188,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627010958
+LineMode=0
+Bar1=96
+Bar2=901
+Bar3=219
+TermPos1=R
+TermPos2=R
+ZOrder=7
+
+[Relation]
+Entity1=genres
+Entity2=products
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=genre_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,671,5345,2011,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627011044
+LineMode=0
+Bar1=67
+Bar2=534
+Bar3=201
+TermPos1=R
+TermPos2=R
+ZOrder=8
+
+[Relation]
+Entity1=products
+Entity2=order_details
+RelationType1=2
+RelationType2=4
+Fields1=id
+Fields2=product_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,445,7217,3470,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210627011410
+LineMode=0
+Bar1=44
+Bar2=722
+Bar3=347
+TermPos1=R
+TermPos2=R
+ZOrder=9
