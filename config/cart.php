@@ -75,7 +75,7 @@ return [
         'thousand_separator' => ',',
 
     ],
-    'default_cart_count'                => 10, // カートに入れられる数
+    'default_cart_count'                => 10, // カートに入れられる商品数
     'default_max_qty'                   => 99, // 最大で購入可能な数量
     'not_exist_product_in_cart_message' => 'カートに商品が存在しません。',
     'no_stock_caution_message'          => '在庫がありません。', // 在庫なしメッセージ

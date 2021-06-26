@@ -4,15 +4,15 @@ namespace App\Library;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Util
 {
     /**
      * カートに追加可能な数量を取得
      *
-     *
      * @param Int $productId
+     * 
      * @return Int
      */
     public static function getAddQtyInCart($productId)

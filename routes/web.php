@@ -17,8 +17,8 @@ Route::get('/cart', 'CartController@index')->name('cart_index');
 Route::post('/cart', 'CartController@addCart')->name('add_cart');
 
 // セッションを使用するため、web側でルート定義
-Route::put('/api/quantity_update', 'APi\CartApi@quantityUpdate')->name('api_quantity_update');
-Route::put('/api/delete_item', 'APi\CartApi@deleteItem')->name('api_delete_item');
+Route::put('/api/quantity_update', 'Api\CartApi@quantityUpdate')->name('api_quantity_update');
+Route::put('/api/delete_item', 'Api\CartApi@deleteItem')->name('api_delete_item');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/order', 'OrderController@order')->name('order');
