@@ -8,12 +8,12 @@
     @foreach($products as $product)
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card h-100">
-                <a href="{{route('product_detail', ['product'=> $product->name_en, 'category_id' => $product->genre->category->id, 'genre_id' => $product->genre->id])}}">
+                <a href="{{route('product_detail', ['product'=> $product->name_en])}}">
                     <img class="bd-placeholder-img card-img-top obj-fit" src="/images/{{$product->imgpath}}" alt="">
                 </a>
                 <div class="card-body px-2 py-3">
                     <h5>
-                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en, 'category_id' => $product->genre->category->id, 'genre_id' => $product->genre->id])}}">
+                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en])}}">
                             {{$product->name}}
                         </a>
                     </h5>

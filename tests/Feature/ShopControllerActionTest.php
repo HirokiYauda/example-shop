@@ -27,10 +27,10 @@ class ShopControllerActionTest extends TestCase
 
         // クエリパラメータセット
         $this->queryString['category'] = "book";
-        $this->queryString['abnormal_category'] = "abnormal";
         $this->queryString['genre'] = "comic";
-        $this->queryString['abnormal_genre'] = "abnormal";
         $this->queryString['other_genre'] = "rock";
+        $this->queryString['free_word'] = "フィルム";
+        $this->queryString['no_exist'] = "no_exist";
     }
 
     /**
@@ -56,9 +56,9 @@ class ShopControllerActionTest extends TestCase
     /** 
      * @test
      */
-    public function categoryNarrowingDown_HTTPテスト_カテゴリなし(): void
+    public function categoryNarrowingDown_HTTPテスト_存在しないカテゴリ(): void
     {
-        $category = $this->queryString["abnormal_category"];
+        $category = $this->queryString["no_exist"];
         $url = "/$category";
         $response = $this->get($url);
         $response->assertStatus(404);
@@ -79,9 +79,9 @@ class ShopControllerActionTest extends TestCase
     /** 
      * @test
      */
-    public function genreNarrowingDown_HTTPテスト_カテゴリなし_ジャンルあり(): void
+    public function genreNarrowingDown_HTTPテスト_存在しないカテゴリ_ジャンルあり(): void
     {
-        $category = $this->queryString["abnormal_category"];
+        $category = $this->queryString["no_exist"];
         $genre = $this->queryString["genre"];
         $url = "/$category/$genre";
         $response = $this->get($url);
@@ -91,10 +91,10 @@ class ShopControllerActionTest extends TestCase
     /** 
      * @test
      */
-    public function genreNarrowingDown_HTTPテスト_カテゴリあり_ジャンルなし(): void
+    public function genreNarrowingDown_HTTPテスト_カテゴリあり_存在しないジャンル(): void
     {
         $category = $this->queryString["category"];
-        $genre = $this->queryString["abnormal_genre"];
+        $genre = $this->queryString["no_exist"];
         $url = "/$category/$genre";
         $response = $this->get($url);
         $response->assertStatus(404);
@@ -103,7 +103,7 @@ class ShopControllerActionTest extends TestCase
     /** 
      * @test
      */
-    public function genreNarrowingDown_HTTPテスト_カテゴリあり_カテゴリに紐づかないジャンルあり(): void
+    public function genreNarrowingDown_HTTPテスト_カテゴリあり_カテゴリに紐づかない存在するジャンル(): void
     {
         $category = $this->queryString["category"];
         $genre = $this->queryString["other_genre"];
@@ -115,11 +115,129 @@ class ShopControllerActionTest extends TestCase
     /** 
      * @test
      */
-    public function genreNarrowingDown_HTTPテスト_カテゴリなし_ジャンルなし(): void
+    public function genreNarrowingDown_HTTPテスト_存在しないカテゴリ_存在しないジャンル(): void
     {
-        $category = $this->queryString["abnormal_category"];
-        $genre = $this->queryString["abnormal_genre"];
+        $category = $this->queryString["no_exist"];
+        $genre = $this->queryString["no_exist"];
         $url = "/$category/$genre";
+        $response = $this->get($url);
+        $response->assertStatus(404);
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_フリーワードあり_カテゴリあり(): void
+    {
+        $category = $this->queryString["category"];
+        $freeWord = $this->queryString["free_word"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertOk();
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_フリーワードあり_カテゴリなし(): void
+    {
+        $category = "";
+        $freeWord = $this->queryString["free_word"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertOk();
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_フリーワードなし_カテゴリあり(): void
+    {
+        $category = $this->queryString["category"];
+        $freeWord = "";
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertRedirect("/$category");
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_存在しないカテゴリ_フリーワードあり(): void
+    {
+        $category = $this->queryString["no_exist"];
+        $freeWord = $this->queryString["free_word"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertRedirect("/");
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_存在しないカテゴリ_フリーワードなし(): void
+    {
+        $category = $this->queryString["no_exist"];
+        $freeWord = "";
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertRedirect("/");
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_存在しないフリーワード_カテゴリあり(): void
+    {
+        $category = $this->queryString["category"];
+        $freeWord = $this->queryString["no_exist"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertOk();
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_存在しないフリーワード_カテゴリなし(): void
+    {
+        $category = "";
+        $freeWord = $this->queryString["no_exist"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertOk();
+    }
+
+    /** 
+     * @test
+     */
+    public function search_HTTPテスト_存在しないフリーワード_存在しないカテゴリ(): void
+    {
+        $category = $this->queryString["no_exist"];
+        $freeWord = $this->queryString["no_exist"];
+        $url = "/search";
+        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $response->assertRedirect("/");
+    }
+
+    /** 
+     * @test
+     */
+    public function productDetail_HTTPテスト_商品名あり(): void
+    {
+        $product = Product::first()->name_en;
+        $url = "/detail/$product";
+        $response = $this->get($url);
+        $response->assertOk();
+    }
+
+    /** 
+     * @test
+     */
+    public function productDetail_HTTPテスト_存在しない商品名(): void
+    {
+        $product = $this->queryString["no_exist"];
+        $url = "/detail/$product";
         $response = $this->get($url);
         $response->assertStatus(404);
     }

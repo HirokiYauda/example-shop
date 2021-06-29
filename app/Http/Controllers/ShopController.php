@@ -101,6 +101,12 @@ class ShopController extends Controller
         $page_name = "「{$request->free_word}」の検索結果";
 
         // クエリパラメータの状態に応じて、遷移先を変更
+        if (!empty($request->category)) {
+            if (empty($genres)) {
+                return redirect()->route('top');
+            }
+        }
+
         if (empty($request->free_word)) {
             if (!empty($genres)) {
                 return redirect()->route('category_narrowing_down', ['category' => $category_name_en]);

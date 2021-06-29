@@ -12,7 +12,7 @@
 */
 Route::get('/', 'ShopController@index')->name('top');
 Route::get('/search', 'ShopController@search')->name('search');
-Route::get('/detail/{product}/', 'ShopController@productDetail')->name('product_detail');
+Route::get('/detail/{product}', 'ShopController@productDetail')->name('product_detail');
 Route::get('/cart', 'CartController@index')->name('cart_index');
 Route::post('/cart', 'CartController@addCart')->name('add_cart');
 
