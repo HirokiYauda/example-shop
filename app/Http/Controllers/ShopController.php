@@ -68,8 +68,8 @@ class ShopController extends Controller
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $specified_category->id)->get();
-        // 必須パラメータのジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
-        $specified_genre = Genre::where('name_en', $genre_name_en)->firstOrFail();
+        // 必須パラメータのカテゴリに紐づくジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
+        $specified_genre = Genre::where('name_en', $genre_name_en)->where('category_id', $specified_category->id)->firstOrFail();
         $page_name = "「{$specified_genre->name}」の商品一覧";
         // 必須パラメータのジャンルから、IDで絞り込みして、商品一覧を取得
         $products = Util::sort(Product::where('genre_id', $specified_genre->id)->with('genre.category'), $request->sort);
@@ -99,6 +99,14 @@ class ShopController extends Controller
             $genres = Genre::where('category_id', $specified_category->id)->get();
         }
         $page_name = "「{$request->free_word}」の検索結果";
+
+        // クエリパラメータの状態に応じて、遷移先を変更
+        if (empty($request->free_word)) {
+            if (!empty($genres)) {
+                return redirect()->route('category_narrowing_down', ['category' => $category_name_en]);
+            }
+            return redirect()->route('top');
+        }
 
         // リクエストから商品の条件を指定
         $products_query = Product::when($genres, function ($query, $genres) {

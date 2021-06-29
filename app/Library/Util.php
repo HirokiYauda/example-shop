@@ -71,7 +71,7 @@ class Util
     public static function getExpansionCartContent()
     {
         $carts = Cart::content();
-        foreach ($carts as $key => $cart) {
+        foreach ($carts as $cart) {
             $cart->options['isAvailable'] = true;
             $cart->options['stock_info_message'] = "";
             $cart->options['max_qty_caution_message'] = "";

@@ -111,7 +111,7 @@
                 @if(isset($genres) && !empty($genres))
                     @foreach ($genres as $genre)
                         <li class="list-unstyled">
-                            <a  class="btn btn-primary mr-2 font06" href="{{route('genre_narrowing_down', ['category' => $category->name_en, 'genre' => $genre->name_en])}}">{{$genre->name}}</a>
+                            <a  class="btn btn-primary mr-2 font06" href="{{route('genre_narrowing_down', ['category' => $genre->category->name_en, 'genre' => $genre->name_en])}}">{{$genre->name}}</a>
                         </li>
                     @endforeach
                 @else

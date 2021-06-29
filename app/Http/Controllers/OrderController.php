@@ -73,19 +73,8 @@ class OrderController extends Controller
 
         if (!empty($orders)) {
             // 注文履歴の作成日から、重複しない年を降順で取得
-            $orderYears = $orders->pluck('created_at')
-                ->mapInto(Carbon::class)
-                ->map(function ($item, $key) {
-                    return $item->format('Y');
-                })
-                ->unique()
-                ->sort(function ($a, $b) {
-                    if ($a == $b) {
-                        return 0;
-                    }
-                    return ($a > $b) ? -1 : 1;
-                });
-
+            $orderYears = $this->getYearByOrderCreatedAt($orders);
+                
             // 注文履歴を、年で絞り込んで取得
             $sort_history = $orderYears->max(); // リクエストがないときは、直近の年を取得
             if (!empty($request->sort_history)) {
@@ -213,5 +202,28 @@ class OrderController extends Controller
 
             return $order_number;
         });
+    }
+
+    /**
+     * 注文履歴の作成日から、重複しない年を降順で取得
+     *
+     * @param \App\Models\Order $order
+     * 
+     * @return object
+     */
+    private function getYearByOrderCreatedAt(object $orders): object
+    {
+        return $orders->pluck('created_at')
+            ->mapInto(Carbon::class)
+            ->map(function ($item, $key) {
+                return $item->format('Y');
+            })
+            ->unique()
+            ->sort(function ($a, $b) {
+                if ($a == $b) {
+                    return 0;
+                }
+                return ($a > $b) ? -1 : 1;
+            });
     }
 }

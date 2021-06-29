@@ -58,7 +58,7 @@ class GenresTableSeeder extends Seeder
             'id' => 7,
             'category_id' => 3,
             'name' => "アクション",
-            'name_en' => "actino",
+            'name_en' => "action",
         ]);
 
         DB::table('genres')->insert([
