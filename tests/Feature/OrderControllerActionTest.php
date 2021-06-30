@@ -4,12 +4,16 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use App\Models\Product;
 use App\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use TestingSeeder;
+use app\Mail\ThanksMail;
+use app\Mail\OrderMail;
+
 
 class OrderControllerActionTest extends TestCase
 {
@@ -124,6 +128,11 @@ class OrderControllerActionTest extends TestCase
      */
     public function purchase_HTTPテスト_正常(): void
     {
+        // 送信されないように設定
+        Mail::fake();
+        // メール送信されないことを確認
+        Mail::assertNothingSent();
+
         $product = Product::first();
         $user = factory(User::class)->state('addAddress')->create();
 
@@ -138,7 +147,23 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->post($url);
+
+        // メッセージが指定したユーザーに届いたことをアサート
+        $email = $user->email;
+        Mail::assertSent(ThanksMail::class, function ($mail) use ($email) {
+            return $mail->hasTo($email);
+        });
+        Mail::assertSent(OrderMail::class, function ($mail) use ($email) {
+            return $mail->hasTo(env('MAIL_FROM_ADDRESS'));
+        });
+
+        // メールがそれぞれ1回送信されたことをアサート
+        Mail::assertSent(ThanksMail::class, 1);
+        Mail::assertSent(OrderMail::class, 1);
+
         $response->assertRedirect("/order/thanks");
+
+
     }
 
     /** 
@@ -146,6 +171,9 @@ class OrderControllerActionTest extends TestCase
      */
     public function purchase_HTTPテスト_カート情報なし(): void
     {
+        // 送信されないように設定
+        Mail::fake();
+
         $user = factory(User::class)->state('addAddress')->create();
 
         $url = "/order";
@@ -158,6 +186,9 @@ class OrderControllerActionTest extends TestCase
      */
     public function purchase_HTTPテスト_住所未登録(): void
     {
+        // 送信されないように設定
+        Mail::fake();
+
         $product = Product::first();
         $user = factory(User::class)->create();
 
@@ -181,6 +212,9 @@ class OrderControllerActionTest extends TestCase
      */
     public function purchase_HTTPテスト_カートに入っている商品が購入可能な状態ではない(): void
     {
+        // 送信されないように設定
+        Mail::fake();
+
         $product = Product::first();
         $user = factory(User::class)->create();
 

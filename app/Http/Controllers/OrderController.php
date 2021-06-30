@@ -133,7 +133,7 @@ class OrderController extends Controller
         // ユーザーへメール送信
         Mail::to($user->email)->send(new ThanksMail($mail_data));
         // 商品管理者へメール送信
-        Mail::to('pixy.gtr@gamil.com')->send(new OrderMail($mail_data));
+        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new OrderMail($mail_data));
         
         // カートを削除
         Cart::destroy();
