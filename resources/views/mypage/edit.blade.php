@@ -36,7 +36,7 @@
                 <label for="email" class="form-label">メールアドレス</label>
                 <input type="email" value="{{old('email', $user->email ?? "")}}" name="email" class="form-control" id="email">
             </div>
-            @include('templete.mypage_address_form');
+            @include('templete.mypage_address_form')
             <div class="text-center"><button type="submit" class="btn btn-primary">変更</button></div>
         </form>
     </div>

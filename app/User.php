@@ -75,8 +75,12 @@ class User extends Authenticatable
     public function getFullAddressAttribute()
     {
         $pref_name = $this->pref->name ?? null;
-        if (!empty($this->zip) && !empty($pref_name) && !empty($this->address1) && !empty($this->address2)) {
-            return "{$this->zip} {$pref_name} {$this->address1} {$this->address2}";
+        if (!empty($this->zip) && !empty($pref_name) && !empty($this->address1)) {
+            if (!empty($this->address2)) {
+                return "{$this->zip} {$pref_name} {$this->address1} {$this->address2}";
+            } else {
+                return "{$this->zip} {$pref_name} {$this->address1}";
+            }
         }
         return "";
     }

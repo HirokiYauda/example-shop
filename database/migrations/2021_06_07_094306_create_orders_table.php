@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('zip', 10)->comment('郵便番号');
             $table->tinyInteger('pref_id')->unsigned()->comment('都道府県ID');
             $table->string('address1')->comment('住所1');
-            $table->string('address2')->comment('住所2');
+            $table->string('address2')->nullable()->comment('住所2');
             $table->integer('total')->comment('合計金額');
             $table->timestamps();
             $table->softDeletes();

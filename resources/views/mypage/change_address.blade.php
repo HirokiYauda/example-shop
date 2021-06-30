@@ -22,7 +22,7 @@
         <form class="h-adr" method="POST" action="{{route('mypage_address_update')}}">
             @csrf
             @method('PUT')
-            @include('templete.mypage_address_form');
+            @include('templete.mypage_address_form')
             <div class="text-center"><button type="submit" class="btn btn-primary">変更</button></div>
         </form>
     </div>

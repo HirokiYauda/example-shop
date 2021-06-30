@@ -51,7 +51,7 @@ class MypageController extends Controller
             'zip' => ['required', new ZipcodeRule],
             'pref_id' => ['required', 'integer'],
             'address1' => ['required', 'string', 'max:200'],
-            'address2' => ['required', 'string', 'max:200'],
+            'address2' => ['nullable', 'string', 'max:200'],
         ]);
 
         $title = "アカウント";
@@ -74,7 +74,7 @@ class MypageController extends Controller
             'zip' => ['required', new ZipcodeRule],
             'pref_id' => ['required', 'integer'],
             'address1' => ['required', 'string', 'max:200'],
-            'address2' => ['required', 'string', 'max:200'],
+            'address2' => ['nullable', 'string', 'max:200'],
         ]);
 
         $title = "住所";
