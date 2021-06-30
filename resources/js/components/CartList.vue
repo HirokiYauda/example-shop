@@ -82,7 +82,7 @@ export default {
             }
 
             if (register_type === 'update') {
-                if(cart.options.max_qty_caution_message) {
+                if(cart.max_qty_caution_message) {
                     this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: false};
                 } else {
                     this.cart_list[cart.rowId].options = {...this.cart_list[cart.rowId].options, isAvailable: true};

@@ -67,7 +67,7 @@ export default {
                 // API側の、try, catch を分岐
                 if(res.data.result) {
                     this.$emit('updateCart', res.data);
-                    this.max_qty_caution_message = res.data.cart.options.max_qty_caution_message;
+                    this.max_qty_caution_message = res.data.cart.max_qty_caution_message;
                     this.qty = value;
                 } else {
                     this.$emit('setError');

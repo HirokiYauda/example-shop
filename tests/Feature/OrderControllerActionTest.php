@@ -45,6 +45,7 @@ class OrderControllerActionTest extends TestCase
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function order_HTTPテスト_正常(): void
@@ -64,10 +65,13 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function order_HTTPテスト_カート情報なし(): void
@@ -76,10 +80,14 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->get($url);
+
+        // レスポンス検証
         $response->assertRedirect('/');
     }
 
     /** 
+     * ステータスコード検証
+     * レスポンス検証
      * @test
      */
     public function order_HTTPテスト_住所未登録(): void
@@ -98,10 +106,16 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->get($url);
+
+        // ステータスコード検証
+        $response->assertOk();
+        // レスポンス検証
         $response->assertSee("住所を登録後に、ご購入ください");
     }
 
     /** 
+     * ステータスコード検証
+     * レスポンス検証
      * @test
      */
     public function order_HTTPテスト_カートに入っている商品が購入可能な状態ではない(): void
@@ -120,10 +134,16 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->get($url);
+
+        // ステータスコード検証
+        $response->assertOk();
+        // レスポンス検証
         $response->assertSee(config("cart.max_qty_caution_message"));
     }
 
     /** 
+     * レスポンス検証
+     * メール検証
      * @test
      */
     public function purchase_HTTPテスト_正常(): void
@@ -161,12 +181,12 @@ class OrderControllerActionTest extends TestCase
         Mail::assertSent(ThanksMail::class, 1);
         Mail::assertSent(OrderMail::class, 1);
 
+        // レスポンス検証
         $response->assertRedirect("/order/thanks");
-
-
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function purchase_HTTPテスト_カート情報なし(): void
@@ -178,10 +198,13 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->post($url);
+
+        // レスポンス検証
         $response->assertRedirect('/');
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function purchase_HTTPテスト_住所未登録(): void
@@ -203,11 +226,13 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->post($url);
+        // レスポンス検証
         $response->assertRedirect('order');
         $this->get('/order')->assertSee("住所を登録後に、ご購入ください");
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function purchase_HTTPテスト_カートに入っている商品が購入可能な状態ではない(): void
@@ -229,6 +254,7 @@ class OrderControllerActionTest extends TestCase
 
         $url = "/order";
         $response = $this->actingAs($user)->post($url);
+        // レスポンス検証
         $response->assertRedirect('order');
         $this->get('/order')->assertSee(config("cart.max_qty_caution_message"));
     }

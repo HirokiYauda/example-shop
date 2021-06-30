@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Tests\TestCase;
 use App\Models\Product;
 use TestingSeeder;
@@ -12,6 +13,7 @@ use TestingSeeder;
 class CartControllerActionTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     /**
      * テストメソッド実行時に、ダミーのデータをセット
@@ -34,23 +36,36 @@ class CartControllerActionTest extends TestCase
         parent::tearDown();
     }
 
-    /** 
+    /**
+     * レスポンス検証
+     * 状態変化検証
      * @test
      */
     public function addCart_HTTPテスト_正常(): void
     {
         $product = Product::first();
+        $qty = $this->faker->numberBetween(1, 99);
 
         $data = [
             'product_id' => $product->id,
-            'qty' => 1
+            'qty' => $qty
         ];
         $url = "/cart";
         $response = $this->post($url, $data);
+
+        // 状態変化検証 カートに追加されているか
+        $cart = Cart::Content();
+        $cart->each(function ($item) use ($qty) {
+            $this->assertSame($item->qty, $qty);
+        });
+
+        // レスポンス検証
         $response->assertRedirect("/cart");
     }
 
-    /** 
+    /**
+     * ステータスコード検証
+     * 状態変化検証
      * @test
      */
     public function addCart_HTTPテスト_バリデーションエラー(): void
@@ -63,10 +78,22 @@ class CartControllerActionTest extends TestCase
         ];
         $url = "/cart";
         $response = $this->post($url, $data);
+
+        // 状態変化検証 カートが空かどうか
+        $cart = Cart::Content();
+        $is_cart = true;
+        if ($cart->isEmpty()) {
+            $is_cart = null;
+        }
+        $this->assertNull($is_cart);
+
+        // ステータスコード検証
         $response->assertStatus(302);
     }
 
-    /** 
+    /**
+     * ステータスコード検証
+     * 状態変化検証
      * @test
      */
     public function addCart_HTTPテスト_存在しない商品ID(): void
@@ -77,6 +104,16 @@ class CartControllerActionTest extends TestCase
         ];
         $url = "/cart";
         $response = $this->post($url, $data);
+
+        // 状態変化検証 カートが空かどうか
+        $cart = Cart::Content();
+        $is_cart = true;
+        if ($cart->isEmpty()) {
+            $is_cart = null;
+        }
+        $this->assertNull($is_cart);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 }

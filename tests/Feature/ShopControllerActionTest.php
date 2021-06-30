@@ -43,6 +43,7 @@ class ShopControllerActionTest extends TestCase
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function categoryNarrowingDown_HTTPテスト_カテゴリあり(): void
@@ -50,10 +51,13 @@ class ShopControllerActionTest extends TestCase
         $category = $this->queryString["category"];
         $url = "/$category";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function categoryNarrowingDown_HTTPテスト_存在しないカテゴリ(): void
@@ -61,10 +65,13 @@ class ShopControllerActionTest extends TestCase
         $category = $this->queryString["no_exist"];
         $url = "/$category";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function genreNarrowingDown_HTTPテスト_カテゴリあり_ジャンルあり(): void
@@ -73,10 +80,13 @@ class ShopControllerActionTest extends TestCase
         $genre = $this->queryString["genre"];
         $url = "/$category/$genre";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function genreNarrowingDown_HTTPテスト_存在しないカテゴリ_ジャンルあり(): void
@@ -85,10 +95,13 @@ class ShopControllerActionTest extends TestCase
         $genre = $this->queryString["genre"];
         $url = "/$category/$genre";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function genreNarrowingDown_HTTPテスト_カテゴリあり_存在しないジャンル(): void
@@ -97,10 +110,13 @@ class ShopControllerActionTest extends TestCase
         $genre = $this->queryString["no_exist"];
         $url = "/$category/$genre";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function genreNarrowingDown_HTTPテスト_カテゴリあり_カテゴリに紐づかない存在するジャンル(): void
@@ -109,10 +125,13 @@ class ShopControllerActionTest extends TestCase
         $genre = $this->queryString["other_genre"];
         $url = "/$category/$genre";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function genreNarrowingDown_HTTPテスト_存在しないカテゴリ_存在しないジャンル(): void
@@ -121,10 +140,13 @@ class ShopControllerActionTest extends TestCase
         $genre = $this->queryString["no_exist"];
         $url = "/$category/$genre";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function search_HTTPテスト_フリーワードあり_カテゴリあり(): void
@@ -133,10 +155,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["free_word"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function search_HTTPテスト_フリーワードあり_カテゴリなし(): void
@@ -145,10 +170,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["free_word"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function search_HTTPテスト_フリーワードなし_カテゴリあり(): void
@@ -157,10 +185,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = "";
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // レスポンス検証
         $response->assertRedirect("/$category");
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function search_HTTPテスト_存在しないカテゴリ_フリーワードあり(): void
@@ -169,10 +200,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["free_word"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // レスポンス検証
         $response->assertRedirect("/");
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function search_HTTPテスト_存在しないカテゴリ_フリーワードなし(): void
@@ -181,10 +215,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = "";
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // レスポンス検証
         $response->assertRedirect("/");
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function search_HTTPテスト_存在しないフリーワード_カテゴリあり(): void
@@ -193,10 +230,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["no_exist"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function search_HTTPテスト_存在しないフリーワード_カテゴリなし(): void
@@ -205,10 +245,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["no_exist"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * レスポンス検証
      * @test
      */
     public function search_HTTPテスト_存在しないフリーワード_存在しないカテゴリ(): void
@@ -217,10 +260,13 @@ class ShopControllerActionTest extends TestCase
         $freeWord = $this->queryString["no_exist"];
         $url = "/search?category=$category&free_word=$freeWord";
         $response = $this->get($url);
+
+        // レスポンス検証
         $response->assertRedirect("/");
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function productDetail_HTTPテスト_商品名あり(): void
@@ -228,10 +274,13 @@ class ShopControllerActionTest extends TestCase
         $product = Product::first()->name_en;
         $url = "/detail/$product";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertOk();
     }
 
     /** 
+     * ステータスコード検証
      * @test
      */
     public function productDetail_HTTPテスト_存在しない商品名(): void
@@ -239,6 +288,8 @@ class ShopControllerActionTest extends TestCase
         $product = $this->queryString["no_exist"];
         $url = "/detail/$product";
         $response = $this->get($url);
+
+        // ステータスコード検証
         $response->assertStatus(404);
     }
 }

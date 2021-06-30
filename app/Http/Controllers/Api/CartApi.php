@@ -22,7 +22,6 @@ class CartApi extends Controller
     {
         $res = [
             "result" => false,
-            "message" => "",
             "cart" => null,
             "cartInfo" => ["count" => 0, "total" => 0],
             "register_type" => "update"
@@ -34,18 +33,23 @@ class CartApi extends Controller
                 'quantity' => 'required|integer|max:' . config("cart.default_max_qty"),
                 'row_id' => 'required|string'
             ]);
+
+            $res["cart"] = [
+                "rowId" => null,
+                "max_qty_caution_message" => null
+            ];
             // カート内の選択商品を更新
             $cart = Cart::update($validatedData['row_id'], $validatedData['quantity']);
+            $res["cart"]['rowId'] = $cart->rowId;
             // ユーザー情報を持っている場合は、カート情報をDBに保管
             Util::registerCart();
     
             // カートに入れている数量が、在庫数を超えていた場合の告知メッセージ更新
             $selectedProductInfo = Product::findOrFail($cart->id); // 選択された商品情報の取得
-            $cart->options['max_qty_caution_message'] = null;
             if ($cart->qty > $selectedProductInfo->stock) {
-                $cart->options['max_qty_caution_message'] = config("cart.max_qty_caution_message");
+                $res["cart"]['max_qty_caution_message'] = config("cart.max_qty_caution_message");
             }
-            $res["cart"] = $cart;
+            
     
             // カート内の合計商品数・合計金額を更新
             $res["cartInfo"] = [
@@ -71,7 +75,6 @@ class CartApi extends Controller
     {
         $res = [
             "result" => false,
-            "message" => "",
             "cartInfo" => ["count" => 0, "total" => 0],
             "register_type" => "delete",
             "row_id" => ""
