@@ -131,8 +131,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["category"];
         $freeWord = $this->queryString["free_word"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertOk();
     }
 
@@ -143,8 +143,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = "";
         $freeWord = $this->queryString["free_word"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertOk();
     }
 
@@ -155,8 +155,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["category"];
         $freeWord = "";
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertRedirect("/$category");
     }
 
@@ -167,8 +167,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["no_exist"];
         $freeWord = $this->queryString["free_word"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertRedirect("/");
     }
 
@@ -179,8 +179,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["no_exist"];
         $freeWord = "";
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertRedirect("/");
     }
 
@@ -191,8 +191,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["category"];
         $freeWord = $this->queryString["no_exist"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertOk();
     }
 
@@ -203,8 +203,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = "";
         $freeWord = $this->queryString["no_exist"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertOk();
     }
 
@@ -215,8 +215,8 @@ class ShopControllerActionTest extends TestCase
     {
         $category = $this->queryString["no_exist"];
         $freeWord = $this->queryString["no_exist"];
-        $url = "/search";
-        $response = $this->json('GET', $url, ['category' => $category, 'free_word' => $freeWord]);
+        $url = "/search?category=$category&free_word=$freeWord";
+        $response = $this->get($url);
         $response->assertRedirect("/");
     }
 
