@@ -1,4 +1,6 @@
 @extends('layouts.default')
+@section('title', "会員登録")
+@section('description', "会員登録のディスクリプション")
 
 @section('content')
 <div class="container">

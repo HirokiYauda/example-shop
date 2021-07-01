@@ -1,5 +1,6 @@
 @extends('layouts.simple')
-@section('title', 'Exapmle Shop')
+@section('title', "ユーザーアカウント管理")
+@section('description', "ユーザーアカウント管理のディスクリプション")
 @section('add_script')
 <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 @endsection

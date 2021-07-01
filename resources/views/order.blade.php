@@ -1,5 +1,6 @@
 @extends('layouts.simple')
-@section('title', 'Exapmle Shop')
+@section('title', "注文確認")
+@section('description', "注文確認のディスクリプション")
 
 @section('content')
 <div class="container">

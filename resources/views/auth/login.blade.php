@@ -1,4 +1,6 @@
 @extends('layouts.default')
+@section('title', "ログイン")
+@section('description', "ログインのディスクリプション")
 
 @section('content')
 <div class="container">

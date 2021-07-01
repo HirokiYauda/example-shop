@@ -1,5 +1,6 @@
 @extends('layouts.default')
-@section('title', 'Exapmle Shop')
+@section('title', "カート一覧")
+@section('description', "カート一覧のディスクリプション")
 
 @section('content')
 <div class="container">

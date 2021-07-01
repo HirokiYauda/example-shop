@@ -1,5 +1,8 @@
 @extends('layouts.default')
-@section('title', 'Exapmle Shop')
+@section('description', 'TOPのディスクリプション')
+@section('canonical')
+<link rel="canonical" href="{{env('APP_URL')}}">
+@endsection
 
 @section('content')
 <h1 class="h3 text-center mb-4">商品一覧</h1>

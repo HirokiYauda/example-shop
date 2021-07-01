@@ -1,5 +1,6 @@
 @extends('layouts.default')
-@section('title', 'Exapmle Shop')
+@section('title', "{$product->name}の商品詳細")
+@section('description', "{$product->name}の商品詳細のディスクリプション")
 
 @section('content')
 {{ Breadcrumbs::render('detail', $product) }}

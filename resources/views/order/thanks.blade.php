@@ -1,4 +1,7 @@
 @extends('layouts.simple')
+@section('title', "購入完了")
+@section('description', "購入完了のディスクリプション")
+
 
 @section('content')
 <div class="container-fluid">

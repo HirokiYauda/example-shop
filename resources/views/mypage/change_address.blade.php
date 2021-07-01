@@ -1,5 +1,6 @@
 @extends('layouts.simple')
-@section('title', 'Exapmle Shop')
+@section('title', "住所変更")
+@section('description', "住所変更のディスクリプション")
 @section('add_script')
 <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 @endsection

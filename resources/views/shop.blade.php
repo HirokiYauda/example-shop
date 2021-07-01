@@ -1,6 +1,8 @@
 @extends('layouts.default')
-@section('title')
-{{$page_name}} | Exapmle Shop
+@section('title', $page_name)
+@section('description', "${page_name}のディスクリプション")
+@section('canonical')
+<link rel="canonical" href="{{url()->current()}}">
 @endsection
 
 @section('content')

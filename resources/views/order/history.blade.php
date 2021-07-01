@@ -1,5 +1,6 @@
 @extends('layouts.default')
-@section('title') Exapmle Shop @endsection
+@section('title', "注文履歴")
+@section('description', "注文履歴のディスクリプション")
 
 @section('content')
 <h1 class="h3 text-center mb-4">注文履歴</h1>
