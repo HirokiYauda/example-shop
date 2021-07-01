@@ -6,7 +6,13 @@
 @endsection
 
 @section('content')
-<h1 class="main-title">「{{Str::limit(request()->free_word, 16, '...')}}」の<span class="br">検索結果　{{$products->count()}}件</span></h1>
+<h1 class="main-title">
+    @if($target_page === 'search')
+    「{{Str::limit(request()->free_word, 16, '...')}}」の<span class="br">検索結果　{{$products->count()}}件</span>
+    @else
+    {{$page_name}}
+    @endif
+</h1>
 @include('templete.sort_select')
 @if($products->isNotEmpty())
 <div class="row">
