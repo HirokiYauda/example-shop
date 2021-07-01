@@ -1,53 +1,116 @@
-img.cart{
-    width: 30px;
+@mixin sp {
+    @media screen and (max-width: 767px) {
+        @content;
+    }
 }
 
-img.incart{
-    width: 50%;
-    display: block;
-    margin: 0 auto;
-    height: 140px;
-    object-fit: cover;
-}
-
-.mycart_box{
-    color: #4c4c4c ;
-    font-weight: bold;
+.main-title {
     text-align: center;
-    margin-top: 24px;
-    padding: 24px 8px;
-    font-size: 1.1em;
-    background-color: #fefefe ;
-    width: 100%;
-
+    margin-bottom: 1.5rem;
+    font-size: 1.575rem;
+    line-height: 1.5;
+    @include sp {
+        font-size: 1.35rem;
+    }
 }
 
-.buy-btn{
-    margin: 40px auto 60px;
-    width: 200px;
-    display: block;
-    background-color: #ff5c73 ;
+.column {
+    @include sp {
+        margin-bottom: 1.5rem;
+    }
 }
 
-.ball{
-    position: absolute;
+.side {
+    @include sp {
+        &__btn {
+            text-align: center;
+        }
+    }
 }
 
-.pagenate{
-    width: 200px;margin: 20px auto;
+div {
+    .img-hidden {
+        height: 150px;
+        overflow: hidden;
+        img {
+            object-fit: cover;
+            height: 100%;
+        }
+    }
 }
 
-.navbar {
-    background-color:#0092b3;
-    color:#fefefe;
+img {
+    &.obj-fit {
+        object-fit: cover;
+        width: 100%;
+    }
+}
+
+.pagination {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
 }
 
 .font06 {
     font-size: 0.6rem;
 }
 
-.obj-fit {
-    width: 100%;
-    height: 10vw;
-    object-fit: cover;
+@include sp {
+    .br {
+        display: block;
+    }
 }
+
+// img.cart{
+//     width: 30px;
+// }
+
+// img.incart{
+//     width: 50%;
+//     display: block;
+//     margin: 0 auto;
+//     height: 140px;
+//     object-fit: cover;
+// }
+
+// .mycart_box{
+//     color: #4c4c4c ;
+//     font-weight: bold;
+//     text-align: center;
+//     margin-top: 24px;
+//     padding: 24px 8px;
+//     font-size: 1.1em;
+//     background-color: #fefefe ;
+//     width: 100%;
+
+// }
+
+// .buy-btn{
+//     margin: 40px auto 60px;
+//     width: 200px;
+//     display: block;
+//     background-color: #ff5c73 ;
+// }
+
+// .ball{
+//     position: absolute;
+// }
+
+// .pagenate{
+//     width: 200px;margin: 20px auto;
+// }
+
+// .navbar {
+//     background-color:#0092b3;
+//     color:#fefefe;
+// }
+
+// .font06 {
+//     font-size: 0.6rem;
+// }
+
+// .obj-fit {
+//     width: 100%;
+//     height: 10vw;
+//     object-fit: cover;
+// }

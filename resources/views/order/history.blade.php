@@ -3,7 +3,7 @@
 @section('description', "注文履歴のディスクリプション")
 
 @section('content')
-<h1 class="h3 text-center mb-4">注文履歴</h1>
+<h1 class="main-title">注文履歴</h1>
 @if(!$orderYears->isEmpty())
     <div class="row">
         <div class="col-2 clearfix mb-3 pr-0">

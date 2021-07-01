@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="h3 text-center mb-4">注文確認</h1>
+    <h1 class="main-title">注文確認</h1>
     <div class="row justify-content-between">
         <div class="column col-lg-8">
             @if($caution_messages)

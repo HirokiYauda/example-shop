@@ -8,16 +8,13 @@
     <div class="row justify-content-between">
         {{-- メインカラム --}}
         <div class="column col-lg-8 bg-white p-4">
-            <div class="row justify-content-between">
-                <div class="col-lg-4 bg-white px-2">
-                    <img class="obj-fit" src="/images/{{$product->imgpath}}" alt="">
+            <div class="row">
+                <div class="col-lg-4 px-2">
+                    <img class="obj-fit" src="/images/{{$product->imgpath}}" alt="{{$product->name_en}}">
                 </div>
-                <div class="col-lg-8 bg-white px-2">
-                    <h2>{{ $product->name }}</h2>
+                <div class="col-lg-8 px-2">
+                    <h1 class="h3">{{ $product->name }}</h1>
                     <p class="lead text-danger mb-1">{{number_format($product->price_including_tax) . "円" ?? ""}}</p>
-                    @if(empty($product->stock))
-                        <p class="text-danger mb-1">{{config("cart.no_stock_caution_message")}}</p>
-                    @endif
                     <p>{{ $product->detail }}</p>
                 </div>
             </div>
@@ -37,20 +34,24 @@
                         </select>
                     </div>
                     @if(!empty($product->stock) && $product->stock < config('cart.display_remaining_inventory_count') )
-                        <p class="text-danger mb-1">残りの在庫数は、{{$product->stock}}点です。</p>
+                        <p class="text-danger mb-3">残りの在庫数は、{{$product->stock}}点です。</p>
                     @endif
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
+                    <div class="side__btn">
+                        <button type="submit" class="btn btn-outline-primary">カートに入れる</button>
+                    </div>
                 </form>
             @else
-                <p class="text-danger mb-1">
+                <p class="text-danger mb-3">
                     @if(empty($product->stock))
                         {{config('cart.no_stock_caution_message')}}
                     @elseif($addQtyInCart <= 0)
                         {{config('cart.max_qty_caution_message')}}
                     @endif
                 </p>
-                <button type="button" class="btn btn-secondary" disabled>カートに入れる</button>
+                <div class="side__btn">
+                    <button type="button" class="btn btn-secondary" disabled>カートに入れる</button>
+                </div>
             @endif
         </div>
     </div>

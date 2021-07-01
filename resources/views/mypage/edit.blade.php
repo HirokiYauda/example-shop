@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="h3 text-center mb-4">アカウント管理</h1>
+    <h1 class="main-title">アカウント管理</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger mb-4">
