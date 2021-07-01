@@ -19,7 +19,7 @@
                     </a>
                 </div>
                 <dl class="card-body px-2 py-3">
-                    <dt>
+                    <dt class="mb-1">
                         <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en])}}">
                             {{$product->name}}
                         </a>

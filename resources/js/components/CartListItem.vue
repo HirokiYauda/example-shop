@@ -1,28 +1,30 @@
 <template>
     <div class="row justify-content-between bg-white px-2 py-3 mb-3">
-        <div class="col-lg-4 bg-white px-2">
+        <div class="col-lg-4 bg-white px-2 column__item">
             <img
                 class="obj-fit"
                 :src="`/images/${cart.options.imgpath}`"
                 alt=""
             />
         </div>
-        <div class="col-lg-8 bg-white px-2">
-            <h2>{{ cart.name }}</h2>
-            <select
-                name="qty"
-                v-model="innerSearchText"
-                class="form-select form-select-sm"
-                aria-label=".form-select-sm example"
-            >
-                <option v-for="count in max_qty" :key="count" :value="count">
-                    {{ count }}
-                </option>
-            </select>
-            <p class="lead text-danger mb-1" v-if="cart.options.stock_info_message">
+        <div class="col-lg-8 bg-white px-2 column__item">
+            <h4>{{ cart.name }}</h4>
+            <div class="mb-1">
+                <select
+                    name="qty"
+                    v-model="innerSearchText"
+                    class="form-select form-select-sm"
+                    aria-label=".form-select-sm example"
+                >
+                    <option v-for="count in max_qty" :key="count" :value="count">
+                        {{ count }}
+                    </option>
+                </select>
+            </div>
+            <p class="text-danger mb-1" v-if="cart.options.stock_info_message">
                 {{ cart.options.stock_info_message }}
             </p>
-            <p class="lead text-danger mb-1" v-if="max_qty_caution_message">
+            <p class="text-danger mb-1" v-if="max_qty_caution_message">
                 {{ max_qty_caution_message }}
             </p>
             <p class="lead text-danger mb-1">

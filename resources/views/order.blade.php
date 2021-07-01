@@ -33,14 +33,14 @@
                 <!-- 注文する商品 -->
                 @foreach($carts as $cart)
                     <div class="row justify-content-between bg-white px-2 py-3 mb-3">
-                        <div class="col-lg-4 bg-white px-2">
+                        <div class="col-lg-4 bg-white px-2 column__item">
                             <img
                                 class="obj-fit"
                                 src="/images/{{$cart->options->imgpath}}"
                                 alt=""
                             />
                         </div>
-                        <div class="col-lg-8 bg-white px-2">
+                        <div class="col-lg-8 bg-white px-2 column__item">
                             <h2>{{$cart->name}}</h2>
                             <p>数量: {{$cart->qty}}</p>
                             <p class="lead text-danger mb-1">
@@ -59,7 +59,6 @@
                         </div>
                     </div>
                 @endforeach
-                
             </div>
         </div>
         <!-- サイドカラム -->

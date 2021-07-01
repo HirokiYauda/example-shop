@@ -9,10 +9,10 @@
         {{-- メインカラム --}}
         <div class="column col-lg-8 bg-white p-4">
             <div class="row">
-                <div class="col-lg-4 px-2">
+                <div class="col-lg-4 px-2 column__item">
                     <img class="obj-fit" src="/images/{{$product->imgpath}}" alt="{{$product->name_en}}">
                 </div>
-                <div class="col-lg-8 px-2">
+                <div class="col-lg-8 px-2 column__item">
                     <h1 class="h3">{{ $product->name }}</h1>
                     <p class="lead text-danger mb-1">{{number_format($product->price_including_tax) . "円" ?? ""}}</p>
                     <p>{{ $product->detail }}</p>
