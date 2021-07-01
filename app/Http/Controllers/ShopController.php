@@ -134,16 +134,17 @@ class ShopController extends Controller
      * 商品詳細
      *
      * @param string $product_name_en query parameter
+     * @param int $product_id query parameter
      * 
      * @return View
      */
-    public function productDetail(string $product_name_en): object
+    public function productDetail(string $product_name_en, int $product_id): object
     {
         // カート情報をDBから復元
         Util::readCart();
 
-        // EN商品名から単一商品情報を取得。存在しないときは例外エラー
-        $product = Product::where('name_en', $product_name_en)->firstOrFail();
+        // 商品名(EN)に合致している商品IDの単一商品情報を取得。存在しないときは例外エラー
+        $product = Product::where('name_en', $product_name_en)->find($product_id)->firstOrFail();
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得
         $genres = Genre::where('category_id', $product->genre->category->id)->get();
         $category_name_en = $product->genre->category->name_en;

@@ -43,7 +43,7 @@
                 @foreach ($order->orderDetail as $orderDetail)
                     <div class="history__list__block column">
                         <div class="col-lg-2 bg-white px-2 column__item">
-                            <a href="{{route('product_detail', ['product' => $orderDetail->product->name_en])}}">
+                            <a href="{{route('product_detail', ['product' => $orderDetail->product->name_en, 'id' => $orderDetail->product_id])}}">
                                 <img
                                     class="obj-fit"
                                     src="/images/{{$orderDetail->product->imgpath}}"
@@ -56,7 +56,7 @@
                             <p class="lead text-danger mb-2">
                                 {{number_format($orderDetail->price_including_tax) . "円" ?? ""}}
                             </p>
-                            <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('product_detail', ['product' => $orderDetail->product->name_en])}}">
+                            <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('product_detail', ['product' => $orderDetail->product->name_en, 'id' => $orderDetail->product_id])}}">
                                 再度購入する
                             </a>
                         </div>

@@ -271,8 +271,8 @@ class ShopControllerActionTest extends TestCase
      */
     public function productDetail_HTTPテスト_商品名あり(): void
     {
-        $product = Product::first()->name_en;
-        $url = "/detail/$product";
+        $product = Product::first();
+        $url = "/detail/$product/{$product->name_en}/{$product->id}";
         $response = $this->get($url);
 
         // ステータスコード検証

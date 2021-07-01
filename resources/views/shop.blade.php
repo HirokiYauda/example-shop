@@ -20,13 +20,13 @@
         <div class="col-sm-6 col-md-3 mb-4">
             <div class="card">
                 <div class="img-hidden">
-                    <a href="{{route('product_detail', ['product'=> $product->name_en])}}">
+                    <a href="{{route('product_detail', ['product'=> $product->name_en, 'id' => $product->id])}}">
                         <img class="card-img-top" src="/images/{{$product->imgpath}}" alt="">
                     </a>
                 </div>
                 <dl class="card-body px-2 py-3">
                     <dt class="mb-1">
-                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en])}}">
+                        <a class="text-decoration-none h6" href="{{route('product_detail', ['product'=> $product->name_en, 'id' => $product->id])}}">
                             {{$product->name}}
                         </a>
                     </dt>
