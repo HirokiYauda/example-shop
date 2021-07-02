@@ -26,7 +26,7 @@
                         <a class="btn btn-info mr-2 font06 text-white mb-2" href="{{route('category_narrowing_down', ['category' => $product->genre->category->name_en])}}">{{$product->genre->category->name}}</a>
                     </dd>
                     <dd class="lead text-danger mb-1">{{number_format($product->price_including_tax) . "円" ?? ""}}</dd>
-                    <dd class="card-text"><small>{{$product->detail}}</small></dd>
+                    <dd class="card-text"><small>{{Str::limit($product->detail, 160, '...')}}</small></dd>
                 </dl>
             </div>
         </div>

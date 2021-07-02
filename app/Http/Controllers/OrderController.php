@@ -80,7 +80,9 @@ class OrderController extends Controller
             if (!empty($request->sort_history)) {
                 $sort_history = $request->sort_history;
             }
-            $orders = Order::with('orderDetail.product')->where('user_id', $user->id)->whereYear('created_at', $sort_history)->get();
+            $orders = Order::with('orderDetail.product')
+                ->where('user_id', $user->id)->whereYear('created_at', $sort_history)
+                ->orderBy('created_at', 'desc')->get();
         }
         
         return view('order.history', compact('orders', 'orderYears'));

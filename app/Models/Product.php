@@ -30,6 +30,6 @@ class Product extends Model
      */
     public function getPriceIncludingTaxAttribute()
     {
-        return $this->price + ($this->price * (config("cart.tax") / 100));
+        return round($this->price + ($this->price * (config("cart.tax") / 100)));
     }
 }
