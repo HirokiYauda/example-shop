@@ -25,7 +25,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'price' => $faker->numberBetween(500, 10000),
         'stock' => $faker->numberBetween(5, 20),
         'imgpath' => $imgpath,
-        'created_at' => new DateTime(),
-        'updated_at' => new DateTime(),
+        'created_at' => $faker->dateTimeThisDecade,
+        'updated_at' => null,
     ];
 });
