@@ -32,6 +32,9 @@
 
                 <!-- 注文する商品 -->
                 @foreach($carts as $cart)
+                    @php
+                        $stock = $product::find($cart->id)->stock;
+                    @endphp
                     <div class="row justify-content-between bg-white px-2 py-3 mb-3">
                         <div class="col-lg-4 bg-white px-2 column__item">
                             <img
@@ -46,15 +49,15 @@
                             <p class="lead text-danger mb-1">
                                 {{$cart->options->price_including_tax ? $cart->options->price_including_tax . "円" : ""}}
                             </p>
-                            @if(empty($product::find($cart->id)->stock))
+                            @if(empty($stock))
                                 <p class="text-danger mb-1">{{config("cart.no_stock_caution_message")}}</p>
-                            @elseif($cart->qty > $product::find($cart->id)->stock)
+                            @elseif($cart->qty > $stock)
                                 <p class="text-danger mb-1">
-                                    残りの在庫数は、{{$product::find($cart->id)->stock}}点です。<br>
+                                    残りの在庫数は、{{$stock}}点です。<br>
                                     {{config('cart.max_qty_caution_message')}}
                                 </p>
-                            @elseif($product::find($cart->id)->stock < 10)
-                                <p class="text-danger mb-1">残りの在庫数は、{{$product::find($cart->id)->stock}}点です。</p>
+                            @elseif($stock < 10)
+                                <p class="text-danger mb-1">残りの在庫数は、{{$stock}}点です。</p>
                             @endif
                         </div>
                     </div>

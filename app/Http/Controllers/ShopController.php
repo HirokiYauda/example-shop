@@ -44,7 +44,7 @@ class ShopController extends Controller
         $page_name = "「{$specified_category->name}」の商品一覧";
         $target_page = "category";
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
-        $genres = Genre::where('category_id', $specified_category->id)->get();
+        $genres = Genre::where('category_id', $specified_category->id)->with('category')->get();
         // 必須パラメータのカテゴリーに紐づくジャンルID一覧で絞り込みして、商品一覧を取得
         $products = Util::sort(Product::whereIn('genre_id', $genres->pluck('id'))->with('genre.category'), $request->sort);
 
@@ -68,7 +68,7 @@ class ShopController extends Controller
         // 必須パラメータのカテゴリが存在するとき、指定カテゴリ取得。存在しないときは例外エラー
         $specified_category = Category::where('name_en', $category_name_en)->firstOrFail();
         // 必須パラメータのカテゴリから、指定ジャンル一覧を取得
-        $genres = Genre::where('category_id', $specified_category->id)->get();
+        $genres = Genre::where('category_id', $specified_category->id)->with('category')->get();
         // 必須パラメータのカテゴリに紐づくジャンルが存在するとき、指定ジャンル取得。存在しないときは例外エラー
         $specified_genre = Genre::where('name_en', $genre_name_en)->where('category_id', $specified_category->id)->firstOrFail();
         $page_name = "「{$specified_genre->name}」の商品一覧";
@@ -98,7 +98,7 @@ class ShopController extends Controller
         $category_name_en = null;
         if (!empty($specified_category)) {
             $category_name_en = $request->category;
-            $genres = Genre::where('category_id', $specified_category->id)->get();
+            $genres = Genre::where('category_id', $specified_category->id)->with('category')->get();
         }
         $page_name = "「{$request->free_word}」の検索結果";
         $target_page = "search";
@@ -146,7 +146,7 @@ class ShopController extends Controller
         // 商品名(EN)に合致している商品IDの単一商品情報を取得。存在しないときは例外エラー
         $product = Product::where('name_en', $product_name_en)->where("id", $product_id)->firstOrFail();
         // 単一商品情報のカテゴリから指定ジャンル一覧を取得
-        $genres = Genre::where('category_id', $product->genre->category->id)->get();
+        $genres = Genre::where('category_id', $product->genre->category->id)->with('category')->get();
         $category_name_en = $product->genre->category->name_en;
 
         // カートに追加可能な数量を取得
