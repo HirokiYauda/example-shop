@@ -216,7 +216,6 @@ class OrderController extends Controller
     private function getYearByOrderCreatedAt(object $orders): object
     {
         return $orders->pluck('created_at')
-            ->mapInto(Carbon::class)
             ->map(function ($item, $key) {
                 return $item->format('Y');
             })

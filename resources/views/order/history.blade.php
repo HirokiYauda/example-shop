@@ -53,6 +53,7 @@
                         </div>
                         <div class="col-lg-10 bg-white px-2 column__item">
                             <p class="h4 mb-1">{{ $orderDetail->product->name }}</p>
+                            <p>購入数量: {{ $orderDetail->qty }}</p>
                             <p class="lead text-danger mb-2">
                                 {{number_format($orderDetail->price_including_tax) . "円" ?? ""}}
                             </p>

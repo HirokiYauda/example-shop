@@ -45,7 +45,7 @@ class Util
         $addQtyInCart = self::getAddQtyInCart($productId); // カートに追加可能な数量を取得
         if ($addQtyInCart <= 0 || $addQtyInCart < $qty) {
             $res["result"] = false;
-            $res["messages"][] = config("cart.max_qty_caution_message");
+            $res["messages"][] = config("cart.one_shopping_max_qty_caution_message");
         }
 
         // カートに入れられる上限数を超えていないか判定
