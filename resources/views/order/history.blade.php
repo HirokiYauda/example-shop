@@ -46,7 +46,7 @@
                             <a href="{{route('product_detail', ['product' => $orderDetail->product->name_en, 'id' => $orderDetail->product_id])}}">
                                 <img
                                     class="obj-fit"
-                                    src="/images/{{$orderDetail->product->imgpath}}"
+                                    src="{{Storage::disk('s3')->url("uploads/{$orderDetail->product->imgpath}")}}"
                                     alt=""
                                 />
                             </a>

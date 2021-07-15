@@ -10,7 +10,7 @@
         <div class="column col-lg-8 bg-white p-4">
             <div class="row">
                 <div class="col-lg-4 px-2 column__item">
-                    <img class="obj-fit" src="/images/{{$product->imgpath}}" alt="{{$product->name_en}}">
+                    <img class="obj-fit" src="{{Storage::disk('s3')->url("uploads/{$product->imgpath}")}}" alt="{{$product->name_en}}">
                 </div>
                 <div class="col-lg-8 px-2 column__item">
                     <h1 class="h3">{{ $product->name }}</h1>

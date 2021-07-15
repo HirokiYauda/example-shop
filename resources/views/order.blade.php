@@ -39,7 +39,7 @@
                         <div class="col-lg-4 bg-white px-2 column__item">
                             <img
                                 class="obj-fit"
-                                src="/images/{{$cart->options->imgpath}}"
+                                src="{{Storage::disk('s3')->url("uploads/{$cart->options->imgpath}")}}"
                                 alt=""
                             />
                         </div>

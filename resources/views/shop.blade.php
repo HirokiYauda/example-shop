@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="img-hidden">
                     <a href="{{route('product_detail', ['product'=> $product->name_en, 'id' => $product->id])}}">
-                        <img class="card-img-top" src="/images/{{$product->imgpath}}" alt="">
+                        <img class="card-img-top" src="{{Storage::disk('s3')->url("uploads/{$product->imgpath}")}}" alt="">
                     </a>
                 </div>
                 <dl class="card-body px-2 py-3">

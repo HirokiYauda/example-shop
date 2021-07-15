@@ -3,7 +3,7 @@
         <div class="col-lg-4 bg-white px-2 column__item">
             <img
                 class="obj-fit"
-                :src="`/images/${cart.options.imgpath}`"
+                :src="`https://exampleshop-images.s3.ap-northeast-1.amazonaws.com/uploads/${cart.options.imgpath}`"
                 alt=""
             />
         </div>
