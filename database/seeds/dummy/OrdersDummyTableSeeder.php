@@ -26,9 +26,9 @@ class OrdersDummyTableSeeder extends Seeder
         $faker = Factory::create('ja_JP');
         $order_data = [];
         $order_detail_data = [];
-        $user_limit_id = 100000; // 注文データに登録するユーザーIDの上限
+        $user_limit_id = 50000; // 注文データに登録するユーザーIDの上限
         $cart_limit_count = 5; // カートに入る商品数の上限
-        $product_limit_id = 300000; // 注文する商品IDの上限
+        $product_limit_id = 100000; // 注文する商品IDの上限
         $qty_limit = 5; // 商品1点の最大数量
         $register_count = 100000; // 何件登録するか | 1000単位でbulk insert
  
