@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'TOP') | Exapmle Shop</title>
+    <meta name=”robots” content=”noindex,nofollow” />
+    <title>@yield('title', 'TOP') | Example Shop</title>
     <meta name="description" content="@yield('description')">
     @yield('canonical')
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -135,7 +136,7 @@
         <a href="javascript:void(0);" id="js-scroll-top" class="scroll-top text-decoration-none bg-secondary d-block py-3 scroll-top text-center text-light">トップへ戻る</a>
         <footer class="bg-white py-5 text-center">
             <p class="lead">{{ config('app.name') }}</p>
-            <p>&copy; 2021, Exapmle Shop</p>
+            <p>&copy; 2021, Example Shop</p>
         </footer>
 
         
