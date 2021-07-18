@@ -17,7 +17,7 @@ class UsersDummyTableSeeder extends Seeder
         DB::table('users')->truncate(); //2回目実行の際にシーダー情報をクリア
         $faker = Factory::create('ja_JP');
         $params = [];
-        $register_count = 500000; // 何件登録するか | 1000単位でbulk insert
+        $register_count = 50000; // 何件登録するか | 1000単位でbulk insert
  
         for ($i=0; $i < $register_count; $i++) { 
             $addresies = explode('  ', $faker->address);

@@ -16,7 +16,7 @@ class ProductsDummyTableSeeder extends Seeder
     public function run()
     {
         DB::table('products')->truncate(); //2回目実行の際にシーダー情報をクリア
-        for ($i = 0; $i < 300; $i++) { // ループの数値を変更する(1000件単位でbulk insert)
+        for ($i = 0; $i < 200; $i++) { // ループの数値を変更する(1000件単位でbulk insert)
             factory(Product::class, 1000)->create();
         }
     }

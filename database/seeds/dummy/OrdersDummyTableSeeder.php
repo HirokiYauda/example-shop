@@ -30,7 +30,7 @@ class OrdersDummyTableSeeder extends Seeder
         $cart_limit_count = 5; // カートに入る商品数の上限
         $product_limit_id = 300000; // 注文する商品IDの上限
         $qty_limit = 5; // 商品1点の最大数量
-        $register_count = 200000; // 何件登録するか | 1000単位でbulk insert
+        $register_count = 100000; // 何件登録するか | 1000単位でbulk insert
  
         for ($i=0; $i < $register_count; $i++) { 
             $num = $i + 1;
