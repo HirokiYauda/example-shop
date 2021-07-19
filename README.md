@@ -14,6 +14,12 @@
 - npm run dev
 - ※ .envファイルの設定が必要
 
+```
+memcachedを使用するため、.env の「CACHE_DRIVER」と「SESSION_DRIVER」を下記に変更
+CACHE_DRIVER=memcached
+SESSION_DRIVER=memcached
+```
+
 ## memcachedへ保存されているか確認
 ```
 セッションにテストデータを格納して、データに含まれているか確認
