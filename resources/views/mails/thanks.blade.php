@@ -22,7 +22,7 @@
     注文合計: {{$mail_data['total']}}円<br>
     <br>
     またのご利用をお待ちしております。<br>
-    <a href="$url">{{$url}}</a>
+    <a href="{{$url}}">{{$url}}</a>
 </p>
 </body>
 </html>
