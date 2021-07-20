@@ -62,6 +62,11 @@
 @endif
 
 <div>
-    {{  $products->appends(request()->input())->links()}}
+    <div class="d-none d-md-block">
+        {{$products->appends(request()->input())->links()}}
+    </div>
+    <div class="d-md-none">
+        {{$products->appends(request()->input())->links('vendor.pagination.simple-bootstrap-4')}}
+    </div>
 </div>
 @endsection
