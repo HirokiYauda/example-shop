@@ -148,7 +148,13 @@ return [
     */
 
     'attributes' => [
+        'name'=>'名前',
+        'email'=>'メールアドレス',
+        'zip'=>'郵便番号',
+        'pref_id'=>'都道府県',
         'zipcode'=>'郵便番号',
+        'address1'=>'住所1',
+        'address2'=>'住所2',
     ],
 
 ];
